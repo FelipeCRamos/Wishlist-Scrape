@@ -1,4 +1,4 @@
-# Price Calculator
+# Price Fetcher
 
 This project aims to generate simple log containing current prices on a given list
 of products (and their sum).
@@ -29,5 +29,50 @@ I could run the program by typing the following commands:
 ./pcalc.py configs/test.txt mercadolivre
 ```
 
+# Creating your custom API
+I've designed this script to be as modular as you want. So with that in mind, 
+just need some little coding to make this script adapt to your desired website.
+
+You'll need basic knowledge in `regex` and `python` in order to create your own
+API.
+
+With that in mind, follow these steps:
++ Navigate to `src/sites` and create you're own website API (ex: `google.py`).
++ On the source file, make sure to follow the guide below:
+
+    ```python
+    class Google:
+        def __init__(self):
+            self.name = "Google"
+
+        def fetch(self, link):
+            # here you fetch on the link given the information you want
+
+        def getPrice(self):
+            # return the price that you've found
+
+        def getName(self):
+            # return the name of the product that you've found
+    ```
+
++ Then, when you're done, go to the `src/fetcher.py` file and include on the 
+header the name of your brand new API, like the following:
+
+    ```python
+    from sites.google import Google
+    # sites.google = path to sites/google.py
+    # Google = class name
+    ```
+
+    And then add support to your API down there:
+
+    ```python
+    # ... inside the getSiteClass(self) function
+    if (self.site.lower() == "google"): # word that you will use when executing
+        self.ref = Google()             # Class that you've created
+    ```
+
 # Authorship
 Developed by Felipe Ramos under the **MIT License**.
+
+Current version: v0.2

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-# PCalc Project
+# Price Fetcher
 # A simple log generator for getting current prices on specified products.
 # Author: FelipeCRamos
-# Version: 0.1
+# Version: 0.2
 
 from product import Product
 
