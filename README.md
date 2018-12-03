@@ -10,7 +10,8 @@ your computer, and the following dependencies:
 + `re`
 
 ## Execution
-To execute, just open the project folder on your favorite terminal and type:
+First, you'll prepare the ambient with `make`. Then, to execute, just open the 
+project folder on your favorite terminal and type:
 ```bash
 python3 pcalc [file-with-links] [kabum/mercadolivre]
 # file-with-links = A simple txt file containing one link per line.
