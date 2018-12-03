@@ -32,7 +32,7 @@ def main():
         total_price += prod_price
         data[prod_name] = prod_price
 
-    print("-" * 110)
+    print("-" * 80)
     print("R$ {:>10.2f}\tTOTAL".format(total_price))
     print("R$ {:>10.2f}\tTOTAL W/ CARD TAX (15% +/-)".format(total_price * 1.15))
     data["TOTAL"] = total_price
@@ -49,8 +49,7 @@ def main():
         output_file_json = open('logs/' + output_filename + '.json', 'w')
         json.dump(data, output_file_json, indent="\t", ensure_ascii=False)
     except:
-        print("Output file could not be written, make sure the ./logs\
-              folder exist.")
+        print("Output file could not be written, make sure the ./logs folder exist.")
         exit()
 
 if __name__ == "__main__":
