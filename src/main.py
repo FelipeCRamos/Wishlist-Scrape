@@ -45,8 +45,13 @@ def main():
             input_name, day.day, day.month, day.year, day.hour, day.minute)
 
 
-    output_file_json = open('logs/' + output_filename + '.json', 'w')
-    json.dump(data, output_file_json, indent="\t", ensure_ascii=False)
+    try:
+        output_file_json = open('logs/' + output_filename + '.json', 'w')
+        json.dump(data, output_file_json, indent="\t", ensure_ascii=False)
+    except:
+        print("Output file could not be written, make sure the ./logs\
+              folder exist.")
+        exit()
 
 if __name__ == "__main__":
     # execute only if run as script
@@ -56,5 +61,5 @@ if __name__ == "__main__":
         print("Generated on {:02d}/{:02d}/{} at {:02d}:{:02d}".format(
             day.day, day.month, day.year, day.hour, day.minute))
     else:
-        print("ERROR: Incorrect number of arguments, please read the docs.")
+        print("ERROR: Incorrect number of arguments, please read the README.md")
         exit()
