@@ -8,6 +8,7 @@ In order to execute this project, you're going to need `python3` installed onto
 your computer, and the following dependencies:
 + `urllib2`
 + `re`
++ `json`
 
 ## Execution
 First, you'll prepare the ambient with `make`. Then, to execute, just open the 
