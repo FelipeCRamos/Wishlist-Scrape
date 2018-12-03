@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
+#coding: utf-8
 
 # Price Fetcher
 # A simple log generator for getting current prices on specified products.
 # Author: FelipeCRamos
-# Version: 0.2
+# Version: 0.2.1
 
 from product import Product
 

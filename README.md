@@ -9,6 +9,8 @@ your computer, and the following dependencies:
 + `urllib2`
 + `re`
 + `json`
++ `datetime`
++ `sys`
 
 ## Execution
 First, you'll prepare the ambient with `make`. Then, to execute, just open the 
@@ -22,8 +24,8 @@ python3 pcalc [file-with-links] [kabum/mercadolivre]
 Let's say i have a file on `configs/test.txt`, and inside of it, i have:
 ```
 https://produto.mercadolivre.com.br/MLB-1146730903-amd-ryzen-2700x-am4-43ghz-octa-core-16theads-rgb-lacrado-_JM
-https://produto.mercadolivre.com.br/MLB-1024669523-adaptador-ativo-displayport-p-hdmi-20-4k-60hz-club3d-uhd-_JM#reco_item_pos=2&reco_backend=machinalis-seller-items&reco_backend_type=low_level&reco_client=vip-seller_items-above&reco_id=3f6356d6-c593-4365-a9e6-91122a156cba
-https://produto.mercadolivre.com.br/MLB-960954066-memoria-kingston-hyperx-fury-8gb-2400mhz-ddr4-gamer-cl15-_JM#reco_item_pos=2&reco_backend=mp2v-combos-v3&reco_backend_type=low_level&reco_client=vip_combo&reco_id=eda13a9f-bdb7-4696-9425-a73a95d150f9
+https://produto.mercadolivre.com.br/MLB-1024669523-adaptador-ativo-displayport-p-hdmi-20-4k-60hz-club3d-uhd-_JM
+https://produto.mercadolivre.com.br/MLB-960954066-memoria-kingston-hyperx-fury-8gb-2400mhz-ddr4-gamer-cl15-_JM
 ```
 I could run the program by typing the following commands:
 ```bash
@@ -48,12 +50,13 @@ With that in mind, follow these steps:
 
         def fetch(self, link):
             # here you fetch on the link given the information you want
+            # you can check out some existing examples like kabum.py or mercadolivre.py
 
         def getPrice(self):
-            # return the price that you've found
+            # return the price that you've found on fetch function
 
         def getName(self):
-            # return the name of the product that you've found
+            # return the name of the product that you've found on fetch function
     ```
 
 + Then, when you're done, go to the `src/fetcher.py` file and include on the 
@@ -76,4 +79,7 @@ header the name of your brand new API, like the following:
 # Authorship
 Developed by Felipe Ramos under the **MIT License**.
 
-Current version: v0.2
+##### Stats
+```
+version     0.2.1
+```
