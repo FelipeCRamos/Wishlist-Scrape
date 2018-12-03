@@ -10,7 +10,7 @@ your computer.
 ## Execution
 To execute, just open the project folder on your favorite terminal and type:
 ```bash
-python3 pcalc
+python3 pcalc [file-with-links] [kabum/mercadolivre]
 ```
 
 # Authorship
