@@ -16,7 +16,7 @@ class Kabum:
 
     def fetch(self, link):
         pat_value = re.compile(r'''<meta\sitemprop="price"\scontent="(.+)">''')
-        pat_value_discount = re.compile(r'''"preco_desconto_avista-cm">R\$\s(\d+,\d+)</span>''')
+        pat_value_discount = re.compile(r'''preco_desconto_avista-cm">R\$\s(\d*\.?\d*\.?\d*\,\d*)<''')
         pat_title = re.compile(r'''class="titulo_det">(.+)</''')
 
         error = False
@@ -41,6 +41,10 @@ class Kabum:
                     desconto = True
                 else:
                     # it's something else
+                    print("ERROR: Price not found!")
+                    # Creates an html log file
+                    with open('error_page.html', 'w') as error_output:
+                        error_output.write(page)
                     self.price = None
                     error = True
 
