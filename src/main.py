@@ -58,12 +58,14 @@ def main():
     print("-" * 80)
 
     global data
+    sorted_data = dict()
 
     # exibit and calculate the sum of all prices
     price_sum = 0
-    for item in data:
-        price_sum += data[item]
-        print("R$ {:10.2f}\t{}".format(data[item], item))
+    for item, price in sorted(data.items(), key=lambda x: x[1], reverse=True):
+        price_sum += price
+        print("R$ {:10.2f}\t{}".format(price, item))
+        sorted_data[item] = price
 
     print("-" * 80)
     print("R$ {:>10.2f}\tTOTAL".format(price_sum))
@@ -80,7 +82,7 @@ def main():
 
     try:
         output_file_json = open('logs/' + output_filename + '.json', 'w')
-        json.dump(data, output_file_json, indent="\t", ensure_ascii=False)
+        json.dump(sorted_data, output_file_json, indent="\t", ensure_ascii=False)
     except:
         print("Output file could not be written, make sure the ./logs folder exist.")
         exit()
