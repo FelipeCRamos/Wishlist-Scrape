@@ -12,30 +12,74 @@ import datetime as dt
 import sys
 import json
 import re
+import threading
+
+data = dict()
+products = []
+
+class FetchUrl(threading.Thread):
+    def run(self):
+        '''
+        Threads system, will fetch data from site and store-it on the data dict
+        '''
+
+        global data         # Where the data will be inserted
+        global products     # product list
+
+        curr = Product(products.pop(0), sys.argv[2])
+
+        prod_price = float(curr.getPrice())
+        prod_name = curr.getName()
+
+        #  print("@thread: {} fetchind data...".format(threading.active_count()))
+        data[prod_name] = prod_price
 
 pattern_pc_name = re.compile(r'/(.+)\.\w+')
 
 def main():
+
     input_f = open(sys.argv[1])
     input_name = pattern_pc_name.search(sys.argv[1]).group(1)
-    input_site = sys.argv[2]
+
+    global products
     products = [ line for line in input_f.read().split('\n') if line != '' ]
 
+
+    print("Fetchind data... Please wait.")
+    for i in range(len(products)):
+        new_thread = FetchUrl(name = "Thread@{}".format(i+1))
+        new_thread.start()
+
+    # wait for all threads to finish
+    while( threading.active_count() != 1 ):
+        continue
+
+    print("\nAll threads had finished!")
+
     total_price = 0
+    global data
 
-    data = dict()
-    for product in products:
-        curr = Product(product, input_site)
-        prod_price = float(curr.getPrice())
-        prod_name = curr.getName()
-        print("R$ {:>10.2f}\t{}".format(prod_price, prod_name))
+    for key in data:
+        total_price += data[key]
+        print("R$ {:10.2f}\t{}".format(data[key], key))
 
-        total_price += prod_price
-        data[prod_name] = prod_price
+    #  for product in products:
+        #  new_thread = FetchUrl(name = "Thread-")
+
+        #  new_thread.start()
+        #  curr = Product(product, input_site)
+        #  prod_price = float(curr.getPrice())
+        #  prod_name = curr.getName()
+
+        #  print("R$ {:>10.2f}\t{}".format(prod_price, prod_name))
+
+        #  total_price += prod_price
+        #  data[prod_name] = prod_price
 
     print("-" * 80)
     print("R$ {:>10.2f}\tTOTAL".format(total_price))
     print("R$ {:>10.2f}\tTOTAL W/ CARD TAX (15% +/-)".format(total_price * 1.15))
+
     data["TOTAL"] = total_price
     data["TOTAL W/ TAXES (15%)"] = total_price * 1.15
 
@@ -44,7 +88,6 @@ def main():
     day = dt.datetime.today()
     output_filename = "{}_{:02d}-{:02d}-{}_{:02d}-{:02d}".format(
             input_name, day.day, day.month, day.year, day.hour, day.minute)
-
 
     try:
         output_file_json = open('logs/' + output_filename + '.json', 'w')
