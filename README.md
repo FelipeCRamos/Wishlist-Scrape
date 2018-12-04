@@ -17,10 +17,12 @@ your computer, and the following dependencies:
 First, you'll prepare the ambient with `make`. Then, to execute, just open the 
 project folder on your favorite terminal and type:
 ```bash
-python3 pcalc [file-with-links] [fetcher]
-# file-with-links = A simple txt file containing one link per line.
-# fetcher = The fetcher that you will use
+python3 pcalc [file-with-links] [fetcher] {[output-format]}
 ```
++ `file-with-links` - A simple `.txt` file containing one link per line ([example](#use-examples)).
++ `fetcher` - The fetcher that you will use, you can select any from 
+[here](#available-fetchers).
++ `output-format` - The desired log output format (`json` or `csv`). If none, `json` will be selected.
 
 ### Available Fetchers
 + [`mercadolivre`](https://www.mercadolivre.com.br)
