@@ -11,15 +11,23 @@ your computer, and the following dependencies:
 + `json`
 + `datetime`
 + `sys`
++ `threadings`
 
 ## Execution
 First, you'll prepare the ambient with `make`. Then, to execute, just open the 
 project folder on your favorite terminal and type:
 ```bash
-python3 pcalc [file-with-links] [kabum/mercadolivre]
+python3 pcalc [file-with-links] [fetcher]
 # file-with-links = A simple txt file containing one link per line.
-# kabum/mercadolivre = The fetcher that you will use (at the moment, only these)
+# fetcher = The fetcher that you will use
 ```
+
+### Available Fetchers
++ [`mercadolivre`](https://www.mercadolivre.com.br)
++ [`kabum`](https://www.kabum.com.br)
+
+*Have one? feel free to make a pull request with it!*
+
 ### Use examples
 Let's say i have a file on `configs/test.txt`, and inside of it, i have:
 ```
@@ -36,7 +44,7 @@ I could run the program by typing the following commands:
 I've designed this script to be as modular as you want. So with that in mind, 
 just need some little coding to make this script adapt to your desired website.
 
-You'll need basic knowledge in `regex` and `python` in order to create your own
+You'll need basic knowledge in `re`(regex) and `python` in order to create your own
 API.
 
 With that in mind, follow these steps:
@@ -81,5 +89,5 @@ Developed by Felipe Ramos under the **MIT License**.
 
 ##### Stats
 ```
-version     0.2.1
+version     0.2.2
 ```

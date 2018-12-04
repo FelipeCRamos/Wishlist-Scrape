@@ -4,7 +4,7 @@
 # Price Fetcher
 # A simple log generator for getting current prices on specified products.
 # Author: FelipeCRamos
-# Version: 0.2.1
+# Version: 0.2.2
 
 from product import Product
 
@@ -18,10 +18,10 @@ data = dict()
 products = []
 
 class FetchUrl(threading.Thread):
+    '''
+    Threads system, will fetch data from site and store-it on the data dict
+    '''
     def run(self):
-        '''
-        Threads system, will fetch data from site and store-it on the data dict
-        '''
 
         global data         # Where the data will be inserted
         global products     # product list
@@ -34,7 +34,7 @@ class FetchUrl(threading.Thread):
         #  print("@thread: {} fetchind data...".format(threading.active_count()))
         data[prod_name] = prod_price
 
-pattern_pc_name = re.compile(r'/(.+)\.\w+')
+pattern_pc_name = re.compile(r'/(.+)\.\w+') # re to get the path/<filename>.ext
 
 def main():
 
@@ -45,7 +45,7 @@ def main():
     products = [ line for line in input_f.read().split('\n') if line != '' ]
 
 
-    print("Fetchind data... Please wait.")
+    print("STATUS: Fetchind data... Please wait.")
     for i in range(len(products)):
         new_thread = FetchUrl(name = "Thread@{}".format(i+1))
         new_thread.start()
@@ -54,34 +54,23 @@ def main():
     while( threading.active_count() != 1 ):
         continue
 
-    print("\nAll threads had finished!")
+    print("\nSTATUS: Fetching complete, now let's get the results!")
+    print("-" * 80)
 
-    total_price = 0
     global data
 
-    for key in data:
-        total_price += data[key]
-        print("R$ {:10.2f}\t{}".format(data[key], key))
-
-    #  for product in products:
-        #  new_thread = FetchUrl(name = "Thread-")
-
-        #  new_thread.start()
-        #  curr = Product(product, input_site)
-        #  prod_price = float(curr.getPrice())
-        #  prod_name = curr.getName()
-
-        #  print("R$ {:>10.2f}\t{}".format(prod_price, prod_name))
-
-        #  total_price += prod_price
-        #  data[prod_name] = prod_price
+    # exibit and calculate the sum of all prices
+    price_sum = 0
+    for item in data:
+        price_sum += data[item]
+        print("R$ {:10.2f}\t{}".format(data[item], item))
 
     print("-" * 80)
-    print("R$ {:>10.2f}\tTOTAL".format(total_price))
-    print("R$ {:>10.2f}\tTOTAL W/ CARD TAX (15% +/-)".format(total_price * 1.15))
+    print("R$ {:>10.2f}\tTOTAL".format(price_sum))
+    print("R$ {:>10.2f}\tTOTAL W/ CARD TAX (15% +/-)".format(price_sum * 1.15))
 
-    data["TOTAL"] = total_price
-    data["TOTAL W/ TAXES (15%)"] = total_price * 1.15
+    data["TOTAL"] = price_sum
+    data["TOTAL W/ TAXES (15%)"] = price_sum * 1.15
 
     # write on the output file
 
