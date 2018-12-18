@@ -1,123 +1,104 @@
 #!/usr/bin/env python3
-#coding: utf-8
 
-# Price Fetcher
-# A simple log generator for getting current prices on specified products.
-# Author: FelipeCRamos
-# Version: 0.2.2
+# Wishlist Scrapper
+# A program to look out for the current prices onto your wishlist
 
-from product import Product
+# Author:
+# FelipeCRamos
 
-import datetime as dt
-import sys
-import json
-import re
-import threading
+# Useful libraries
+import datetime as dt   # For generating today's info (log generation)
+import sys              # Argv manipulating
+import re               # Regex things
+import threading        # Threads everywhere
+
+# Custom project libraries
+import args
+import product as pd
+import logs
 
 data = dict()
+sorted_data = dict()
 products = []
 
-def write2csv(filepath, data):
-    with open(filepath, 'w') as output:
-        for key,value in data.items():
-            output.write("{};{}\n".format(key, value))
-
-def write2json(filepath, data):
-    try:
-        output_file_json = open(filepath, 'w')
-        json.dump(data, output_file_json, indent="\t", ensure_ascii=False)
-    except:
-        print("Output file could not be written, make sure the ./logs folder exist.")
-        exit()
-
-
-class FetchUrl(threading.Thread):
+class CreateThread(threading.Thread):
     '''
-    Threads system, will fetch data from site and store-it on the data dict
+    Thread system, each thread will be responsible for one Product
     '''
     def run(self):
+        global data
+        global products
 
-        global data         # Where the data will be inserted
-        global products     # product list
+        curr = products.pop(0)
+        curr_name = curr.link.split('/')[-1]
 
-        curr = Product(products.pop(0), sys.argv[2])
+        print('Fetching... \t{}\n'.format(curr_name[0:40]))
 
-        prod_price = float(curr.getPrice())
-        prod_name = curr.getName()
+        #  Fetch data & spit onto the dictionary
+        data[curr.get_title()] = curr.get_price()
 
-        #  print("@thread: {} fetchind data...".format(threading.active_count()))
-        data[prod_name] = prod_price
+def main(filepath, filename):
+    # Tries to open the file for links extraction
+    try:
+        links_file = open(filepath, 'r')
+    except Exception as e:
+        print(e)    # Display error msg
+        exit()
 
-pattern_pc_name = re.compile(r'/(.+)\.\w+') # re to get the path/<filename>.ext
+    # Separate links into a link list
+    links = [ link for link in links_file.read().split('\n') if link != '' ]
 
-def main():
+    # Check if the file isn't empty
+    if( len(links) == 0 ):
+        print("ERROR: No links found on the file!")
+        exit()
 
-    input_f = open(sys.argv[1])
-    input_name = pattern_pc_name.search(sys.argv[1]).group(1)
-
+    # Create Product list
     global products
-    products = [ line for line in input_f.read().split('\n') if line != '' ]
+    products = [ pd.Product(link) for link in links ]
 
-
-    print("STATUS: Fetchind data... Please wait.")
     for i in range(len(products)):
-        new_thread = FetchUrl(name = "Thread@{}".format(i+1))
-        new_thread.start()
+        CreateThread().start()
 
-    # wait for all threads to finish
+    #  while( len(products) != 0 ):
+        #  print("")
+        #  curr = products.pop(0)
+        #  print("Fetching...")
+        #  data[curr.get_title()] = curr.get_price()
+
+    # Wait until all threads are done
     while( threading.active_count() != 1 ):
         continue
 
-    print("\nSTATUS: Fetching complete, now let's get the results!")
-    print("-" * 80)
-
-    global data
-    sorted_data = dict()
-
-    # exibit and calculate the sum of all prices
-    price_sum = 0
+    # Sort data by price
+    global sorted_data
+    total_sum = 0
     for item, price in sorted(data.items(), key=lambda x: x[1], reverse=True):
-        price_sum += price
-        print("R$ {:10.2f}\t{}".format(price, item))
+        total_sum += price
         sorted_data[item] = price
+        print("R$ {:8.2f}\t{}".format(price, item[0:70]))
 
-    # round numbers to 2 decimal cases
-    price_sum = round(price_sum, 2)
-    price_card = round(price_sum * 1.15, 2)
+    total_sum = round(total_sum, 2)
+    sorted_data['TOTAL'] = total_sum
 
-    print("-" * 80)
-    print("R$ {:>10.2f}\tTOTAL".format(price_sum))
-    print("R$ {:>10.2f}\tTOTAL W/ CARD TAX (15% +/-)".format(price_card))
-
-    sorted_data["TOTAL"] = price_sum
-    sorted_data["TOTAL W/ TAXES (15%)"] = price_card
-    print(price_card)
-
-    # pick info about today, to generate the log filename
-    day = dt.datetime.today()
-    output_filename = "{}_{:02d}-{:02d}-{}_{:02d}-{:02d}".format(
-            input_name, day.day, day.month, day.year, day.hour, day.minute)
-
-    try:
-        sel = sys.argv[3]
-
-        if( sel == 'csv' ):
-            write2csv('logs/' + output_filename + '.csv', sorted_data)
-        elif( sel == 'json' ):
-            write2json('logs/' + output_filename + '.json', sorted_data)
-        else:
-            print("ERROR: Format .{} not identified! Not saving.".format(sel))
-    except IndexError:
-        # write by default json
-        write2json('logs/' + output_filename + '.json', sorted_data)
+    print('-'*86)
+    print("R$ {:8.2f}\t{}".format(total_sum, 'TOTAL'))
 
 if __name__ == "__main__":
-    # execute only if run as script
-    if len(sys.argv) >= 3 and len(sys.argv) <=4:
-        main()
+    parsed_info = args.parseArgs(sys.argv)
+
+    if parsed_info['parse_fail'] is False:
+        main(parsed_info['filepath'], parsed_info['filename'])
+
         day = dt.datetime.today()
-        print("Generated on {:02d}/{:02d}/{} at {:02d}:{:02d}".format(
-            day.day, day.month, day.year, day.hour, day.minute))
+
+        output_name = \
+            parsed_info['output_dir'] + parsed_info['filename'].split('.')[0] +\
+            "_{:02d}-{:02d}-{}".format(day.day, day.month, day.year)
+
+        logs.write2json(
+            output_name,
+            sorted_data
+        )
     else:
-        print("ERROR: Incorrect number of arguments, please read the README.md")
         exit()

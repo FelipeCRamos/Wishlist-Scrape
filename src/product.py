@@ -1,35 +1,62 @@
-if __name__ == "__main__":
-    print("ERROR: You cannot run this script.")
-    exit()
+#!/usr/bin/env python3
 
-from fetcher import Fetcher
+import re                           # Regex
+from sites.api import *    #
 
 class Product:
-    def __init__(self, p_link, p_site):
-        '''
-        Default constructor, initializes the product link and price,
-        setup the fetcher
-        '''
-        self.link = p_link          # product link
-        self.api = Fetcher(p_site)  # product fetcher
-        self.price = 0
+    '''
+    Class to hold product details
+    '''
+    def __init__(self, link):
+        self.link = link        # Product link
+        self.fetched = False    # Fetch state
 
-    def getPrice(self, force_update=False):
-        '''
-        Function to get product price, calling the API for the value
-        '''
-        # if not already fetched, fetch it
-        if( self.price == 0 or force_update == True ):
-            self.price = self.api.getInfo(self.link)['value']
-            return self.price
+    def __repr__(self):
+        return "{}".format(self.link.split('/')[-1])
 
-        # just return the already checked value
+    def fetch(self):
+        '''
+        Will be responsible for the comunication with the correct API
+        '''
+        if self.link != '' and self.fetched == False:
+            # Check which API to use
+            self.api = choose_api(self.link)
+
+            # Store product info on the self.info
+            self.info = self.api.fetch(self.api, self.link)
+            self.fetched = True
+
         else:
-            return self.price
+            if self.link == '':
+                raise Exception('Link is empty')
 
-    def getName(self):
+    def get_title(self):
         '''
-        Function to get product name, calling the API details
+        Will return the title of the product
         '''
-        self.name = self.api.getInfo(self.link)['name']
-        return self.name
+        if self.fetched == False:
+            self.fetch()
+            return self.info['title']
+
+        else:
+            return self.info['title']
+
+    def get_price(self):
+        '''
+        Will return the price of the product
+        '''
+        if self.fetched == False:
+            self.fetch()
+            return self.info['price']
+        else:
+            return self.info['price']
+
+    def get_discount(self):
+        '''
+        Get the boolean
+        '''
+        if self.fetched == False:
+            self.fetch()
+            return self.info['discount']
+        else:
+            return self.info['discount']

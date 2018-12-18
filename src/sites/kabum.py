@@ -1,76 +1,54 @@
-#coding: utf-8
-if __name__ == "__main__":
-    print("ERROR: You cannot run this script.")
-    exit()
+import re
+from urllib.request import *
 
-from urllib.request import *    # url handling tools
-import re                       # regex ftw
-
-class Kabum:
-    '''
-    API for fetching data from Kabum
-    '''
-    def __init__(self):
-        ''' Default Constructor '''
-        self.name = "Kabum"
-
+class Kabum():
     def fetch(self, link):
-        pat_value = re.compile(r'''<meta\sitemprop="price"\scontent="(.+)">''')
-        pat_value_discount = re.compile(r'''preco_desconto_avista-cm">R\$\s(\d*\.?\d*\.?\d*\,\d*)<''')
-        pat_title = re.compile(r'''class="titulo_det">(.+)</''')
-
-        error = False
-        title_error = False
-        desconto = False
-
-        with urlopen(Request(link)) as response:
-            page = response.read().decode('ISO-8859-1') # kabum needs ISO-8859-1
-
-            # Search for the value of the product
-            search_result = pat_value.search(page)
-            if search_result is not None:
-                self.price = float(search_result.group(1))
-
-            else:
-                # it's on promo!
-                search_result = pat_value_discount.search(page)
-                if search_result is not None:
-                    self.price = search_result.group(1)
-                    # in order to do not break further conversions
-                    self.price = self.price.replace('.', '').replace(',','.')
-                    desconto = True
-                else:
-                    # it's something else
-                    print("ERROR: Price not found!")
-                    # Creates an html log file
-                    with open('error_page.html', 'w') as error_output:
-                        error_output.write(page)
-                    self.price = None
-                    error = True
-
-            search_result = pat_title.search(page)
-
-            if search_result is not None:
-                self.title = search_result.group(1)
-
-            else:
-                title_error = True
-                self.title = "[Could not fetch]"
-
-    def getPrice(self):
         '''
-        Return fetched value for product
+        Will return a Dictionary with:
+        - title -> String
+        - price -> Float
+        - discount -> Boolean
         '''
-        if self.price is not None:
-            return self.price
+
+        patterns = {
+            'title': re.compile(r'''class="titulo_det">(.+)</'''),
+            'regular_price': re.compile(r'''<meta\sitemprop="price"\scontent="(.+)">'''),
+            'discount_price': re.compile(r'''preco_desconto_avista-cm">R\$\s(\d*\.?\d*\.?\d*\,\d*)<'''),
+        }
+
+        # Open the link
+        try:
+            page = urlopen(Request(link)).read().decode('ISO-8859-1')
+        except Exception as e:
+            print(e)
+
+        infos = dict()
+        # Title fetch
+        title_re = patterns['title'].search(page)
+        try:
+            infos['title'] = title_re.group(1)
+        except Exception as e:
+            raise Exception('No title found on the link: %s' % link)
+
+        # Price fetch
+        regular_price_re = patterns['regular_price'].search(page)
+        try:
+            infos['price'] = regular_price_re.group(1)
+            infos['discount'] = False
+        except Exception as e:
+            discount_price_re = patterns['discount_price'].search(page)
+            try:
+                infos['price'] = discount_price_re.group(1)
+                infos['discount'] = True
+            except Exception as ej:
+                raise Exception('No price found on link: %s' % link)
+
+        # Convert price to a float
+        if infos['discount'] == False:
+            infos['price'] = float(infos['price'])
         else:
-            return 0.0001
+            infos['price'] = float(infos['price'].replace('.','').replace(',', '.'))
 
-    def getName(self):
-        '''
-        Return fetched value for getName
-        '''
-        if self.title is not None:
-            return self.title[0:-1]
-        else:
-            return "No Title"
+        # Everything went OK by this point
+        self.fetched = True
+        return infos

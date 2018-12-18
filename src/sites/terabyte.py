@@ -1,7 +1,7 @@
 import re
 from urllib.request import *
 
-class ML():
+class Terabyte():
     def fetch(self, link):
         '''
         Will return a Dictionary with:
@@ -11,8 +11,9 @@ class ML():
         '''
 
         patterns = {
-            'title': re.compile(r'''<h1 class="item-title__primary\s">\n\t\t(.+)\n\t</h1>'''),
-            'regular_price': re.compile(r'''class="price-tag-symbol"\scontent="(.+)"'''),
+            'title': re.compile(r'''class="tit-prod">\n*<strong>(.+)</strong>'''),
+            'regular_price': re.compile(r'''<p\sclass="val-prod">R\$\s(\d*\.?\d*\.?\d*\,\d*)\s*</p>'''),
+            'empty_store_price': re.compile(r'''\*<span>R\$\s(\d*\.?\d*\.?\d*\,\d*)\s*</span>''')
         }
 
         # Header required to open terabyteshop pages with urllib
@@ -29,7 +30,9 @@ class ML():
         try:
             page = urlopen(Request(link, headers = hdr)).read().decode('UTF-8')
         except Exception as e:
-            print(e)
+            page = urlopen(Request(link, headers = hdr)).read().decode('LATIN-1')
+            print("Error at link: %s" % link)
+            print(e, "\n\n")
 
         infos = dict()
         # Title fetch
@@ -46,10 +49,19 @@ class ML():
             infos['price'] = regular_price_re.group(1)
             infos['discount'] = False
         except Exception as e:
-            raise Exception('No price found on link: %s' % link)
+            empty_store_price_re = patterns['empty_store_price'].search(page)
+            try:
+                infos['price'] = empty_store_price_re.group(1)
+                infos['discount'] = False
+                infos['empty_store'] = True
+            except Exception as ej:
+                err = open('error_page.html', 'wb')
+                err.write(page)
+
+                raise Exception('No price found on link: %s' % link)
 
         # Convert price to a float
-        infos['price'] = float(infos['price'])
+        infos['price'] = float(infos['price'].replace('.','').replace(',', '.'))
 
         # Everything went OK by this point
         self.fetched = True
