@@ -1,8 +1,21 @@
+# Ryzen 7 2700
 https://www.kabum.com.br/produto/95564/processador-amd-ryzen-7-2700-c-wraith-spire-cooler-octa-core-cache-20mb-3-2ghz-max-turbo-4-1ghz-am4-yd2700bbafbox/?tag=ryzen%202700
+
+# Gigabyte AM4 ATX x370 Aorus Gaming K5
 https://www.kabum.com.br/produto/89966/placa-mae-gigabyte-p-amd-am4-atx-aorus-ga-ax370-gaming-k5-ddr4
+
+# Memória Corsair Vengeance LPX 8GB 2400MHz DDR4 CL14 Black
 https://www.kabum.com.br/produto/81413/memoria-corsair-vengeance-lpx-8gb-2400mhz-ddr4-cl14-black-cmk8gx4m1a2400c14/?tag=corsair%20vengeance%20lpx
+https://www.kabum.com.br/produto/81413/memoria-corsair-vengeance-lpx-8gb-2400mhz-ddr4-cl14-black-cmk8gx4m1a2400c14/?tag=corsair%20vengeance%20lpx
+
+# NVidia Geforce GT 1030 DDR4 (just for video)
 https://www.kabum.com.br/produto/97073/placa-de-video-vga-evga-nvidia-geforce-gt-1030-ddr4-2gb-sddr4-passive-low-profile-02g-p4-6232-kr/?tag=GA%20EVGA%20NVIDIA%20GeForce%20GT%201030%20DDR4%202GB
-https://www.kabum.com.br/produto/81413/memoria-corsair-vengeance-lpx-8gb-2400mhz-ddr4-cl14-black-cmk8gx4m1a2400c14/?tag=corsair%20vengeance%20lpx
+
+# Gabinete NZXT Mid Tower S340 Preto
 https://www.kabum.com.br/produto/65494/gabinete-nzxt-mid-tower-s340-preto-azul-lateral-em-acrilico-ca-s340mb-gb
+
+# Fonte corsair 550w 80-plus-bronze semi-modular
 https://www.kabum.com.br/produto/77625/fonte-corsair-550w-80-plus-bronze-semi-modular-cx550m-cp-9020102
+
+# SSD Kingston 2.5 240GB Sata III
 https://www.kabum.com.br/produto/85197/ssd-kingston-2-5-240gb-a400-sata-iii-leituras-500mbs-gravacoes-350mbs-sa400s37-240g/?tag=SSD%20Kingston%202.5%20240GB%20A400%20SATA%20III

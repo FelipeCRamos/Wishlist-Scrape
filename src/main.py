@@ -35,7 +35,11 @@ class CreateThread(threading.Thread):
         print('Fetching... \t{}\n'.format(curr_name[0:40]))
 
         #  Fetch data & spit onto the dictionary
-        data[curr.get_title()] = curr.get_price()
+        if( curr.get_title() in data ):
+            data[curr.get_title()] += curr.get_price()
+        else:
+            data[curr.get_title()] = curr.get_price()
+
 
 def main(filepath, filename):
     # Tries to open the file for links extraction
@@ -46,7 +50,7 @@ def main(filepath, filename):
         exit()
 
     # Separate links into a link list
-    links = [ link for link in links_file.read().split('\n') if link != '' ]
+    links = [ link for link in links_file.read().split('\n') if link != '' and link[0] != '#' ]
 
     # Check if the file isn't empty
     if( len(links) == 0 ):
