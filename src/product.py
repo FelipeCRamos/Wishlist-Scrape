@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import re                           # Regex
-from sites.api import *    #
+import re                   # Regex module
+from sites.api import *     # Sites API's
 
 class Product:
     '''

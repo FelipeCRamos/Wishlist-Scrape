@@ -32,7 +32,8 @@ class CreateThread(threading.Thread):
         curr = products.pop(0)
         curr_name = curr.link.split('/')[-1]
 
-        print('Fetching... \t{}\n'.format(curr_name[0:40]))
+        # Fetch logging
+        #  print('Fetching... \t{}\n'.format(curr_name[0:40]))
 
         #  Fetch data & spit onto the dictionary
         if( curr.get_title() in data ):
