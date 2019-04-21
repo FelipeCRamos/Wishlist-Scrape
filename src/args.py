@@ -39,8 +39,8 @@ def parseArgs(args):
 
 
     else:
-        print("ERROR: PARSE: Incorrect number of Args, please check docs!")
+        print("ERROR: PARSE: Incorrect number of Args!")
+        print("Run:\t./wcalc.py [input_file] [output_dir]")
         parsed['parse_fail'] = True
 
     return parsed
-
