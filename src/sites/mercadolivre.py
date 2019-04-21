@@ -1,5 +1,5 @@
 import re
-from urllib.request import *
+import requests
 
 class ML():
     def fetch(self, link):
@@ -15,21 +15,14 @@ class ML():
             'regular_price': re.compile(r'''class="price-tag-symbol"\scontent="(.+)"'''),
         }
 
-        # Header required to open terabyteshop pages with urllib
-        hdr = {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-            'Accept-Encoding': 'none',
-            'Accept-Language': 'en-US,en;q=0.8',
-            'Connection': 'keep-alive'
-        }
-
         # Open the link
         try:
-            page = urlopen(Request(link, headers = hdr)).read().decode('UTF-8')
+            response = requests.get(link)
+            page = response.text
         except Exception as e:
-            print(e)
+            print("Link Error: %s" % link)
+            infos = {'title': link.split('/')[-1], 'price': 0.00, 'discount': False}
+            return infos
 
         infos = dict()
         # Title fetch

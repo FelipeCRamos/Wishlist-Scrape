@@ -1,5 +1,5 @@
 import re
-from urllib.request import *
+import requests
 
 class Kabum():
     def fetch(self, link):
@@ -18,9 +18,14 @@ class Kabum():
 
         # Open the link
         try:
-            page = urlopen(Request(link)).read().decode('ISO-8859-1')
+            response = requests.get(link)
+            page = response.text
         except Exception as e:
-            print(e)
+            print("Link Error: %s" % link)
+
+            # will return a "null" infos object
+            infos = {'title': link.split('/')[-1], 'price': 0.00, 'discount': False}
+            return infos
 
         infos = dict()
         # Title fetch
