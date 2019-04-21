@@ -1,8 +1,8 @@
 # Ryzen 7 2700
 https://www.kabum.com.br/produto/95564/processador-amd-ryzen-7-2700-c-wraith-spire-cooler-octa-core-cache-20mb-3-2ghz-max-turbo-4-1ghz-am4-yd2700bbafbox/?tag=ryzen%202700
 
-# Gigabyte AM4 ATX x370 Aorus Gaming K5
-https://www.kabum.com.br/produto/89966/placa-mae-gigabyte-p-amd-am4-atx-aorus-ga-ax370-gaming-k5-ddr4
+# Placa Mãe MSI x470 Gaming M7 ATX
+https://www.kabum.com.br/produto/95923/placa-mae-msi-x470-gaming-m7-ac-amd-am4-atx-ddr4
 
 # Memória Corsair Vengeance LPX 8GB 2400MHz DDR4 CL14 Black
 https://www.kabum.com.br/produto/79936/memoria-kingston-hyperx-fury-8gb-2400mhz-ddr4-cl15-black-hx424c15fb2-8
@@ -12,10 +12,10 @@ https://www.kabum.com.br/produto/79936/memoria-kingston-hyperx-fury-8gb-2400mhz-
 https://www.kabum.com.br/produto/97073/placa-de-video-vga-evga-nvidia-geforce-gt-1030-ddr4-2gb-sddr4-passive-low-profile-02g-p4-6232-kr/?tag=GA%20EVGA%20NVIDIA%20GeForce%20GT%201030%20DDR4%202GB
 
 # Gabinete NZXT H500I
-https://www.terabyteshop.com.br/produto/9289/gabinete-nzxt-h500i-ca-h500w-b1-vidro-temperado-mid-tower-preto-sfonte
+# https://www.terabyteshop.com.br/produto/9289/gabinete-nzxt-h500i-ca-h500w-b1-vidro-temperado-mid-tower-preto-sfonte
 
 # Fonte corsair 550w 80-plus-bronze semi-modular
 https://www.kabum.com.br/produto/77625/fonte-corsair-550w-80-plus-bronze-semi-modular-cx550m-cp-9020102
 
-# SSD Kingston 2.5 240GB Sata III
-https://www.kabum.com.br/produto/85197/ssd-kingston-2-5-240gb-a400-sata-iii-leituras-500mbs-gravacoes-350mbs-sa400s37-240g/?tag=SSD%20Kingston%202.5%20240GB%20A400%20SATA%20III
+# SSD Adata XPG Gammix S11 Pro, 256GB, M.2 NVMe, Leitura 3500MB/s, Gravação 1200MB/s - AGAMMIXS11P-256GT-Chttps://www.kabum.com.br/produto/100945/ssd-adata-xpg-gammix-s11-pro-256gb-m-2-nvme-leitura-3500mb-s-gravacao-1200mb-s-agammixs11p-256gt-c
+https://www.kabum.com.br/produto/100945/ssd-adata-xpg-gammix-s11-pro-256gb-m-2-nvme-leitura-3500mb-s-gravacao-1200mb-s-agammixs11p-256gt-c

@@ -1,8 +1,8 @@
-# i5-8600k
-https://www.kabum.com.br/produto/92919/processador-intel-core-i5-8600k-coffee-lake-8a-geracao-cache-9mb-3-6ghz-4-3ghz-max-turbo-lga-11
+# i5 9600K
+https://www.kabum.com.br/cgi-local/site/produtos/descricao_ofertas.cgi?codigo=98765
 
-# Gigabyte LGA 1151 ATX z370 Aorus Gaming 5
-https://www.kabum.com.br/produto/93126/placa-mae-gigabyte-p-intel-lga-1151-atx-z370-aorus-gaming-5-ddr4
+# Gigabyte LGA 1151 ATX z390 Gaming SLI
+https://www.kabum.com.br/produto/98160/placa-mae-gigabyte-z390-gaming-sli-intel-lga-1151-atx-ddr4
 
 # Corsair Vengeance LPX 8gb 2400Mhz DDR4 CL14 Black
 https://www.kabum.com.br/produto/79936/memoria-kingston-hyperx-fury-8gb-2400mhz-ddr4-cl15-black-hx424c15fb2-8
@@ -13,8 +13,8 @@ https://www.terabyteshop.com.br/produto/9289/gabinete-nzxt-h500i-ca-h500w-b1-vid
 # Fonte Corsair 550w 80-Plus White
 https://www.kabum.com.br/produto/98868/fonte-corsair-550w-80-plus-white-vs550-cp-9020171/?tag=Fonte%20Corsair%20550w%2080%20Plus%20White%20VS550
 
-# SSD Kingston 240gb a400 Sata III
-https://www.kabum.com.br/produto/85197/ssd-kingston-2-5-240gb-a400-sata-iii-leituras-500mbs-gravacoes-350mbs-sa400s37-240g/?tag=SSD%20Kingston%202.5%20240GB%20A400%20SATA
+# SSD ADATA XPG GAMMIX S11 PRO 256GB M.2 NVMe
+https://www.kabum.com.br/produto/100945/ssd-adata-xpg-gammix-s11-pro-256gb-m-2-nvme-leitura-3500mb-s-gravacao-1200mb-s-agammixs11p-256gt-c
 
 # Cooler Master Intel i70 Strong Airflow
 https://www.kabum.com.br/produto/96514/cooler-para-processador-cooler-master-intel-i70-strong-airflow-low-noise-rr-i70-20fk-r1/?tag=Cooler%20Master%20Intel%20I70%20Strong%20Airflow%20Low%20Noise%20RR-I70-20FK-R1

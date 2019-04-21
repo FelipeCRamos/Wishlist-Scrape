@@ -1,21 +1,21 @@
 # Ryzen 7 2700x
 https://www.kabum.com.br/produto/95565/processador-amd-ryzen-7-2700x-c-wraith-prism-cooler-octa-core-cache-20mb-3-7ghz-max-turbo-4-35ghz-am4-yd270xbgafbox/?tag=ryzen%202700x
 
-# Gigabyte AM4 ATX x470 Aorus Gaming 5 Wifi DDR4
-https://www.kabum.com.br/produto/96466/placa-mae-gigabyte-p-amd-am4-atx-x470-aorus-gaming-5-wifi-ddr4
+# Placa Mãe MSI x470 Gaming M7 AM4 ATX
+https://www.kabum.com.br/produto/95923/placa-mae-msi-x470-gaming-m7-ac-amd-am4-atx-ddr4
 
-# Memória corsair Vengeance LPX 8GB 2400MHz DDR4 CL14 Black
+# Memória Kingston HyperX Fury 8GB 2400Mhz DDR4
 https://www.kabum.com.br/produto/79936/memoria-kingston-hyperx-fury-8gb-2400mhz-ddr4-cl15-black-hx424c15fb2-8
 https://www.kabum.com.br/produto/79936/memoria-kingston-hyperx-fury-8gb-2400mhz-ddr4-cl15-black-hx424c15fb2-8
 
-# Nvidia Geforce gt 1030 ddr4 (just for video)
+# EVGA Nvidia Geforce GT 1030 ddr4 2gb
 https://www.kabum.com.br/produto/97073/placa-de-video-vga-evga-nvidia-geforce-gt-1030-ddr4-2gb-sddr4-passive-low-profile-02g-p4-6232-kr/?tag=GA%20EVGA%20NVIDIA%20GeForce%20GT%201030%20DDR4%202GB
 
-# Gabinete NZXT H500I
-https://www.terabyteshop.com.br/produto/9289/gabinete-nzxt-h500i-ca-h500w-b1-vidro-temperado-mid-tower-preto-sfonte
+# Gabinete nzxt H500i
+# https://www.terabyteshop.com.br/produto/9289/gabinete-nzxt-h500i-ca-h500w-b1-vidro-temperado-mid-tower-preto-sfonte
 
-# Fonte Corsair 650W 80 Plus Gold Semi Modular
+# Fonte Corsair 650w 80 Plus Gold Semi Modular
 https://www.kabum.com.br/produto/91026/fonte-corsair-650w-80-plus-gold-semi-modular-tx650m-cp-9020132
 
-# SSD Kingston A1000 M.2 2280 240GB PCIe NVMe Ger 3.0
-https://www.kabum.com.br/produto/96306/ssd-kingston-a1000-m-2-2280-240gb-pcie-nvme-ger-3-0-x-2-leituras-1-500mb-s-e-gravacoes-800mb-s-sa1000m8-240g
+# SSD ADATA XPG GAMMIX S11 PRO 256GB M.2 NVMe
+https://www.kabum.com.br/produto/100945/ssd-adata-xpg-gammix-s11-pro-256gb-m-2-nvme-leitura-3500mb-s-gravacao-1200mb-s-agammixs11p-256gt-c
