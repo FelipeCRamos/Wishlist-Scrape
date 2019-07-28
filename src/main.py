@@ -18,29 +18,43 @@ import product as pd
 import logs
 
 data = dict()
+repeatData = dict()
 sorted_data = dict()
 products = []
+
+THREAD_ENABLE = True
+
+def addFetchedData(title, price):
+    global data
+
+    if title in data:
+        data[title] += price
+
+        if title in repeatData:
+            repeatData[title] += 1
+        else:
+            repeatData[title] = 2
+
+    else:
+        data[title] = price
+
+def fetchNext():
+    global products
+
+    curr = products.pop(0)
+    curr_name = curr.link.split('/')[-1]
+
+    print("Fetching... \t{}\n".format(curr_name[0:40]))
+
+    addFetchedData(curr.get_title(), curr.get_price())
 
 class CreateThread(threading.Thread):
     '''
     Thread system, each thread will be responsible for one Product
     '''
     def run(self):
-        global data
-        global products
-
-        curr = products.pop(0)
-        curr_name = curr.link.split('/')[-1]
-
-        # Fetch logging
-        #  print('Fetching... \t{}\n'.format(curr_name[0:40]))
-
-        #  Fetch data & spit onto the dictionary
-        if( curr.get_title() in data ):
-            data[curr.get_title()] += curr.get_price()
-        else:
-            data[curr.get_title()] = curr.get_price()
-
+        # Make the fetch on the next product
+        fetchNext()
 
 def main(filepath, filename):
     # Tries to open the file for links extraction
@@ -63,13 +77,10 @@ def main(filepath, filename):
     products = [ pd.Product(link) for link in links ]
 
     for i in range(len(products)):
-        CreateThread().start()
-
-    #  while( len(products) != 0 ):
-        #  print("")
-        #  curr = products.pop(0)
-        #  print("Fetching...")
-        #  data[curr.get_title()] = curr.get_price()
+        if THREAD_ENABLE:
+            CreateThread().start()
+        else:
+            fetchNext()
 
     # Wait until all threads are done
     while( threading.active_count() != 1 ):
@@ -81,7 +92,10 @@ def main(filepath, filename):
     for item, price in sorted(data.items(), key=lambda x: x[1], reverse=True):
         total_sum += price
         sorted_data[item] = price
-        print("R$ {:8.2f}\t{}".format(price, item[0:70]))
+
+        no_occur = repeatData[item] if item in repeatData else 1
+
+        print("R$ {:8.2f}\t({}x) {}".format(price, no_occur, item[0:70]))
 
     total_sum = round(total_sum, 2)
     sorted_data['TOTAL'] = total_sum
