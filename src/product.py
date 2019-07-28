@@ -35,9 +35,11 @@ class Product:
         Will return the title of the product
         '''
         if self.fetched == False:
+            # try:
             self.fetch()
             return self.info['title']
-
+            #  except:
+                #  return "No title available! Link: {}".format(self.link[-15:])
         else:
             return self.info['title']
 
@@ -46,8 +48,11 @@ class Product:
         Will return the price of the product
         '''
         if self.fetched == False:
+            #  try:
             self.fetch()
             return self.info['price']
+            #  except:
+                #  return 0
         else:
             return self.info['price']
 
