@@ -1,5 +1,6 @@
 import re
 import requests
+import pdb
 
 class Terabyte():
     def fetch(self, link):
@@ -12,7 +13,7 @@ class Terabyte():
 
         patterns = {
             'title': re.compile(r'''class="tit-prod">\n*<strong>(.+)</strong>'''),
-            'regular_price': re.compile(r'''<p\sclass="val-prod">R\$\s(\d*\.?\d*\.?\d*\,\d*)\s*</p>'''),
+            'regular_price': re.compile(r'''<p\sid="valVista"\sclass="val-prod\svalVista">R\$\s(\d*\.?\d*\.?\d*\,\d*)\s*</p>'''),
             'empty_store_price': re.compile(r'''\*<span>R\$\s(\d*\.?\d*\.?\d*\,\d*)\s*</span>''')
         }
 
@@ -20,6 +21,9 @@ class Terabyte():
         try:
             response = requests.get(link)
             page = response.text
+            if response.status_code != 200:
+                Exception("Ops... Something went wrong! Error: {}"\
+                          .format(response.status_code))
         except Exception as e:
             print("Link Error: %s" % link)
             infos = {'title': link.split('/')[-1], 'price': 0.00, 'discount': False}
