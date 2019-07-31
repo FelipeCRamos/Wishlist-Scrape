@@ -9,6 +9,7 @@
 # Useful libraries
 import datetime as dt   # For generating today's info (log generation)
 import sys              # Argv manipulating
+import os
 import re               # Regex things
 import threading        # Threads everywhere
 
@@ -16,6 +17,7 @@ import threading        # Threads everywhere
 import args
 import product as pd
 import logs
+import parser
 
 data = dict()
 repeatData = dict()
@@ -34,7 +36,6 @@ def addFetchedData(title, price):
             repeatData[title] += 1
         else:
             repeatData[title] = 2
-
     else:
         data[title] = price
 
@@ -104,7 +105,27 @@ def main(filepath, filename):
     print("R$ {:8.2f}\t{}".format(total_sum, 'TOTAL'))
 
 if __name__ == "__main__":
-    parsed_info = args.parseArgs(sys.argv)
+    #  parsed_info = args.parseArgs(sys.argv)
+
+    arguments = [
+        'l', # -l <links-file.txt>
+        'o', # -o <output_folder/.>
+    ]
+
+    necessaryArguments = [ 'l' ]
+
+    try:
+        parsedArgs = parser.Parser(sys.argv, arguments, necessaryArguments).parseArgs()
+        print(os.getcwd())
+        if 'o' in parsedArgs:
+            main(parsedArgs['l'], parsedArgs['o'])
+        else:
+            main(parsedArgs['l'], ".")
+
+    except Exception as inst:
+        print('ERROR:', inst)
+
+    exit()
 
     if parsed_info['parse_fail'] is False:
         main(parsed_info['filepath'], parsed_info['filename'])
@@ -112,8 +133,7 @@ if __name__ == "__main__":
         day = dt.datetime.today()
 
         output_name = \
-            parsed_info['output_dir'] + parsed_info['filename'].split('.')[0] +\
-            "_{:02d}-{:02d}-{}".format(day.day, day.month, day.year)
+            parsed_info['output_dir'] + parsed_info['filename'].split('.')[0] +\ "_{:02d}-{:02d}-{}".format(day.day, day.month, day.year)
 
         logs.write2json(
             output_name,
