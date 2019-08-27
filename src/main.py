@@ -25,6 +25,7 @@ sorted_data = dict()
 products = []
 
 THREAD_ENABLE = True
+VERBOSE_ENABLE = False
 
 def addFetchedData(title, price):
     global data
@@ -45,7 +46,8 @@ def fetchNext():
     curr = products.pop(0)
     curr_name = curr.link.split('/')[-1]
 
-    print("Fetching... \t{}\n".format(curr_name[0:40]))
+    if VERBOSE_ENABLE:
+        print("Fetching... \t{}\n".format(curr_name[0:40]))
 
     addFetchedData(curr.get_title(), curr.get_price())
 
@@ -57,7 +59,7 @@ class CreateThread(threading.Thread):
         # Make the fetch on the next product
         fetchNext()
 
-def main(filepath, filename):
+def main(filepath, folderpath):
     # Tries to open the file for links extraction
     try:
         links_file = open(filepath, 'r')
@@ -84,7 +86,7 @@ def main(filepath, filename):
             fetchNext()
 
     # Wait until all threads are done
-    while( threading.active_count() != 1 ):
+    while threading.active_count() != 1:
         continue
 
     # Sort data by price
@@ -92,9 +94,11 @@ def main(filepath, filename):
     total_sum = 0
     for item, price in sorted(data.items(), key=lambda x: x[1], reverse=True):
         total_sum += price
-        sorted_data[item] = price
 
         no_occur = repeatData[item] if item in repeatData else 1
+
+        itemName = "({}x) - {}".format(no_occur, item)
+        sorted_data[itemName] = price
 
         print("R$ {:8.2f}\t({}x) {}".format(price, no_occur, item[0:70]))
 
@@ -103,6 +107,12 @@ def main(filepath, filename):
 
     print('-'*86)
     print("R$ {:8.2f}\t{}".format(total_sum, 'TOTAL'))
+    print('-' * 90)
+
+    output_filepath = folderpath + ("/" if folderpath[-1] != '/' else "") + \
+        filepath.split('.')[0].split("/")[-1]
+    print("Output filepath: {}".format(output_filepath))
+    logs.write2json(output_filepath, sorted_data)
 
 if __name__ == "__main__":
     #  parsed_info = args.parseArgs(sys.argv)
@@ -116,7 +126,7 @@ if __name__ == "__main__":
 
     try:
         parsedArgs = parser.Parser(sys.argv, arguments, necessaryArguments).parseArgs()
-        print(os.getcwd())
+        #  print(os.getcwd()) # debug msg
         if 'o' in parsedArgs:
             main(parsedArgs['l'], parsedArgs['o'])
         else:
@@ -126,18 +136,3 @@ if __name__ == "__main__":
         print('ERROR:', inst)
 
     exit()
-
-    if parsed_info['parse_fail'] is False:
-        main(parsed_info['filepath'], parsed_info['filename'])
-
-        day = dt.datetime.today()
-
-        output_name = \
-            parsed_info['output_dir'] + parsed_info['filename'].split('.')[0] +\ "_{:02d}-{:02d}-{}".format(day.day, day.month, day.year)
-
-        logs.write2json(
-            output_name,
-            sorted_data
-        )
-    else:
-        exit()
