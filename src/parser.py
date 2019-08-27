@@ -38,7 +38,6 @@ class Parser:
     ''' Auxiliary methods '''
     def splitter(self, args):
         # todo: make a splitter that considers `"`
-        print(type(args))
         if type(args) == type(list()):
             return args
         else:
