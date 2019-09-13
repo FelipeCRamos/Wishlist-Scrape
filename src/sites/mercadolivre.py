@@ -1,5 +1,6 @@
 import re
 import requests
+from bs4 import BeautifulSoup as bSoup
 
 class ML():
     def fetch(self, link):
@@ -9,11 +10,6 @@ class ML():
         - price -> Float
         - discount -> Boolean
         '''
-
-        patterns = {
-            'title': re.compile(r'''<h1 class="item-title__primary\s">\n\t\t(.+)\n\t</h1>'''),
-            'regular_price': re.compile(r'''class="price-tag-symbol"\scontent="(.+)"'''),
-        }
 
         # Open the link
         try:
@@ -25,19 +21,19 @@ class ML():
             return infos
 
         infos = dict()
-        # Title fetch
-        title_re = patterns['title'].search(page)
+        soup = bSoup(page, 'html.parser')
 
+        # Title fetch
         try:
-            infos['title'] = title_re.group(1)
+            infos['title'] = soup.h1.string.replace('\n', '').replace('\t', '')
         except Exception as e:
             raise Exception('No title found on the link: %s' % link)
 
         # Price fetch
-        regular_price_re = patterns['regular_price'].search(page)
         try:
-            infos['price'] = regular_price_re.group(1)
+            infos['price'] = soup.fieldset.span.span['content']
             infos['discount'] = False
+
         except Exception as e:
             raise Exception('No price found on link: %s' % link)
 
