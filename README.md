@@ -11,6 +11,7 @@ This project makes use of the following `python3` libs:
 + `threadings`
 + `sys`
 + `os`
++ `bs4`
 
 ## Execution
 Just follow the steps:
