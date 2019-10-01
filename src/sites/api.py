@@ -6,6 +6,7 @@ from urllib.request import *
 from sites.kabum import Kabum
 from sites.mercadolivre import ML
 from sites.terabyte import Terabyte
+from sites.amazon import Amazon
 
 class Fetcher:
     '''
@@ -26,6 +27,7 @@ def choose_api(link):
         'kabum.com.br': Kabum,
         'terabyteshop.com.br': Terabyte,
         'mercadolivre.com.br': ML,
+        'amazon.com.br': Amazon,
     }
 
     # Now, let's find the domain of the link
