@@ -1,0 +1,16 @@
+beautifulsoup4==4.8.1
+blessings==1.7
+bs4==0.0.1
+certifi==2019.9.11
+chardet==3.0.4
+Click==7.0
+colorama==0.4.1
+idna==2.8
+inquirer==2.6.3
+python-editor==1.0.4
+readchar==2.0.1
+requests==2.22.0
+six==1.12.0
+soupsieve==1.9.4
+stronghold==1.5
+urllib3==1.25.6
