@@ -35,26 +35,25 @@ class Product:
         Will return the title of the product
         '''
         if self.fetched == False:
-            # try:
             self.fetch()
+
+        try:
             return self.info['title']
-            #  except:
-                #  return "No title available! Link: {}".format(self.link[-15:])
-        else:
-            return self.info['title']
+        except Exception as e:
+            return f"No title available! Link: {self.product_name_by_link()}"
+
 
     def get_price(self):
         '''
         Will return the price of the product
         '''
         if self.fetched == False:
-            #  try:
             self.fetch()
+
+        try:
             return self.info['price']
-            #  except:
-                #  return 0
-        else:
-            return self.info['price']
+        except Exception as e:
+            raise Exception(f"No price available! Link: {self.product_name_by_link()}")
 
     def get_discount(self):
         '''
@@ -62,6 +61,11 @@ class Product:
         '''
         if self.fetched == False:
             self.fetch()
+
+        try:
             return self.info['discount']
-        else:
-            return self.info['discount']
+        except Exception as e:
+            raise Exception(f"No discount available! Link: {self.product_name_by_link()}")
+
+    def product_name_by_link(self):
+        return self.link.split('/')[-1]

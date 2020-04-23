@@ -1,7 +1,8 @@
 import re
 import requests
+from . import api
 
-class Kabum():
+class Kabum(api.Fetcher):
     def fetch(self, link):
         '''
         Will return a Dictionary with:
@@ -19,9 +20,11 @@ class Kabum():
         # Open the link
         try:
             response = requests.get(link)
+            if(response.status_code != 200):
+                raise Exception(f"Error {response.status_code} on link {link.split('/')[-1]}")
             page = response.text
         except Exception as e:
-            print("Link Error: %s" % link)
+            print(f"Link Error: {e}")
 
             # will return a "null" infos object
             infos = {'title': link.split('/')[-1], 'price': 0.00, 'discount': False}
