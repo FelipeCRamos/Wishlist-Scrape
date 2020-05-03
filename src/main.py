@@ -12,13 +12,12 @@ import sys              # Argv manipulating
 import os
 import re               # Regex things
 import threading        # Threads everywhere
-import argparse
+import argparse         # cool arg parser
 
 # Custom project libraries
 import args
 import product as pd
 import logs
-import parser
 
 data = dict()
 repeatData = dict()
