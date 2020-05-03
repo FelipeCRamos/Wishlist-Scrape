@@ -12,6 +12,7 @@ import sys              # Argv manipulating
 import os
 import re               # Regex things
 import threading        # Threads everywhere
+import argparse
 
 # Custom project libraries
 import args
@@ -120,6 +121,7 @@ def main(filepath, folderpath):
 
 if __name__ == "__main__":
     #  parsed_info = args.parseArgs(sys.argv)
+    #  print("Main executed!")
 
     arguments = [
         'l', # -l <links-file.txt>

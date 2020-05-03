@@ -1,8 +1,9 @@
 import re
 import requests
-from . import api
 
-class Kabum(api.Fetcher):
+from .fetcher import Fetcher
+
+class Kabum(Fetcher):
     def fetch(self, link):
         '''
         Will return a Dictionary with:
@@ -48,7 +49,7 @@ class Kabum(api.Fetcher):
             try:
                 infos['price'] = discount_price_re.group(1)
                 infos['discount'] = True
-            except Exception as ej:
+            except Exception as e:
                 raise Exception('No price found on link: %s' % link)
 
         # Convert price to a float
