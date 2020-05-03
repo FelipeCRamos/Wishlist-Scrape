@@ -120,23 +120,13 @@ def main(filepath, folderpath):
     logs.write2json(output_filepath, sorted_data)
 
 if __name__ == "__main__":
-    #  parsed_info = args.parseArgs(sys.argv)
-    #  print("Main executed!")
+    parser = argparse.ArgumentParser(description = "Fetch prices of a given wishlist")
 
-    arguments = [
-        'l', # -l <links-file.txt>
-        'o', # -o <output_folder/.>
-    ]
-
-    necessaryArguments = [ 'l' ]
+    parser.add_argument('-l', required=True, help="List of products (one per line)", metavar=('list.txt'))
+    parser.add_argument('-o', required=False, help="Output fetched prices", metavar=('output_file.txt'))
 
     try:
-        parsedArgs = parser.Parser(sys.argv, arguments, necessaryArguments).parseArgs()
-        #  print(os.getcwd()) # debug msg
-        if 'o' in parsedArgs:
-            main(parsedArgs['l'], parsedArgs['o'])
-        else:
-            main(parsedArgs['l'], ".")
+        main(parser.parse_args().l, parser.parse_args().o if parser.parse_args().o != None else ".")
 
     except Exception as inst:
         print('ERROR:', inst)
