@@ -30,15 +30,16 @@ VERBOSE_ENABLE = False
 def addFetchedData(title, price):
     global data
 
-    if title in data:
-        data[title] += price
+    if title is not None and price is not None:
+        if title in data:
+            data[title] += price
 
-        if title in repeatData:
-            repeatData[title] += 1
+            if title in repeatData:
+                repeatData[title] += 1
+            else:
+                repeatData[title] = 2
         else:
-            repeatData[title] = 2
-    else:
-        data[title] = price
+            data[title] = price
 
 def fetchNext():
     global products
@@ -49,7 +50,10 @@ def fetchNext():
     if VERBOSE_ENABLE:
         print("Fetching... \t{}\n".format(curr_name[0:40]))
 
-    addFetchedData(curr.get_title(), curr.get_price())
+    try:
+        addFetchedData(curr.get_title(), curr.get_price())
+    except Exception as e:
+        print(e)
 
 class CreateThread(threading.Thread):
     '''

@@ -18,6 +18,12 @@ class Fetcher:
     def fetch(self, link):
         pass
 
+    def get_title(self):
+        pass
+
+    def get_price(self):
+        pass
+
 def choose_api(link):
     '''
     Function that will choose the correct API for a given link
