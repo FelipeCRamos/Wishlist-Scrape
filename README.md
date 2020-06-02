@@ -16,13 +16,17 @@ This project makes use of the following `python3` libs:
 ## Execution
 Just follow the steps:
 1. `make`
-2. `./wcalc path/to/file/with/links output/file/directory`
+2. `./wcalc -l path/to/file/with/links -o output/file/directory`
 
-+ `./wcalc` - The program itself
-+ `path/to/file/with/links` - A simple text file, containing all the links to be
-fetch, separated by an newline character (`\n`)
-+ `output/file/directory` - A directory to place the `.json` file created after
-the fetch
+```
+usage: wcalc.py [-h] -l list.txt [-o output_file.txt] [-T]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -l list.txt           List of products (one link per line)
+  -o output_file.json   Output fetched prices
+  -T, --no-threading    Disable parallel fetches
+```
 
 ### Use examples
 Let's say that i have a file on `lists/test.txt` with this inside:
@@ -92,5 +96,5 @@ Developed by Felipe Ramos under the **MIT License**
 
 ###### Stats
 ```
-version     0.2.3
+version     0.2.4
 ```

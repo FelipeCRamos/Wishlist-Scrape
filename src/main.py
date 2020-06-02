@@ -26,6 +26,7 @@ products = []
 
 THREAD_ENABLE = True
 VERBOSE_ENABLE = False
+CURRENT_VERSION = "0.2.4"
 
 def addFetchedData(title, price):
     global data
@@ -121,8 +122,8 @@ def main(filepath, folderpath):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = "Fetch prices of a given wishlist")
 
-    parser.add_argument('-l', required=True, help="List of products (one per line)", metavar=('list.txt'))
-    parser.add_argument('-o', required=False, help="Output fetched prices", metavar=('output_file.txt'))
+    parser.add_argument('-l', required=True, help="List of products (one link per line)", metavar=('list.txt'))
+    parser.add_argument('-o', required=False, help="Output fetched prices", metavar=('output_file.json'))
     parser.add_argument('-T', '--no-threading',  required=False, help="Disable parallel fetches", action='store_true')
 
     args = parser.parse_args()
