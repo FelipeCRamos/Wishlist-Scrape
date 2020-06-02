@@ -1,5 +1,6 @@
 import re
 import requests
+from bs4 import BeautifulSoup
 import pdb
 
 class Terabyte():
@@ -11,15 +12,10 @@ class Terabyte():
         - discount -> Boolean
         '''
 
-        patterns = {
-            'title': re.compile(r'''class="tit-prod">\n*<strong>(.+)</strong>'''),
-            'regular_price': re.compile(r'''<p\sid="valVista"\sclass="val-prod\svalVista">R\$\s(\d*\.?\d*\.?\d*\,\d*)\s*</p>'''),
-            'empty_store_price': re.compile(r'''\*<span>R\$\s(\d*\.?\d*\.?\d*\,\d*)\s*</span>''')
-        }
-
         # Open the link
         try:
             response = requests.get(link)
+            print(f"[STATUS] Getting link: {link}")
             page = response.text
             if response.status_code != 200:
                 Exception("Ops... Something went wrong! Error: {}"\
@@ -30,33 +26,25 @@ class Terabyte():
             return infos
 
         infos = dict()
-        # Title fetch
-        title_re = patterns['title'].search(page)
 
-        try:
-            infos['title'] = title_re.group(1)
-        except Exception as e:
-            raise Exception('No title found on the link: %s' % link)
+        soup = BeautifulSoup(page, 'html.parser')
 
-        # Price fetch
-        regular_price_re = patterns['regular_price'].search(page)
+        # Getting title
         try:
-            infos['price'] = regular_price_re.group(1)
+            infos['title'] = soup.find('h1', 'tit-prod').text
+        except:
+            raise Exception("No title found on the link: %s" % link)
+
+        # Getting price
+        try:
+            infos['price'] = float(soup.find('p', 'valVista').text.strip()[3:].replace(',', '.'))
             infos['discount'] = False
-        except Exception as e:
-            empty_store_price_re = patterns['empty_store_price'].search(page)
-            try:
-                infos['price'] = empty_store_price_re.group(1)
-                infos['discount'] = False
-                infos['empty_store'] = True
-            except Exception as ej:
-                err = open('error_page.html', 'wb')
-                err.write(page)
-
-                raise Exception('No price found on link: %s' % link)
-
-        # Convert price to a float
-        infos['price'] = float(infos['price'].replace('.','').replace(',', '.'))
+        except:
+            if soup.find('div', 'indisponivel') != None or soup.find('button', 'btn-exclusivo') != None:
+                # Unavailable product
+                infos['price'] = 0
+            else:
+                raise Exception("No price found on link: %s" % link)
 
         # Everything went OK by this point
         self.fetched = True

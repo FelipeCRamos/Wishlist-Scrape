@@ -46,7 +46,8 @@ the right API for that site.
 At the moment, the `API` only extends to the following websites:
 + `mercadolivre`
 + `kabum`
-+ `terabyteshop` (not stable)
++ `terabyteshop`
++ `amazon` (Outdated)
 
 # Creating your custom API
 I've designed this script to be as modular as you want. So with that in mind, 
