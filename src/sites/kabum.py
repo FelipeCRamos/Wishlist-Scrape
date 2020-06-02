@@ -1,8 +1,10 @@
 import re
 import requests
-from . import api
+from bs4 import BeautifulSoup
 
-class Kabum(api.Fetcher):
+from .fetcher import Fetcher
+
+class Kabum(Fetcher):
     def fetch(self, link):
         '''
         Will return a Dictionary with:
@@ -11,18 +13,14 @@ class Kabum(api.Fetcher):
         - discount -> Boolean
         '''
 
-        patterns = {
-            'title': re.compile(r'''class="titulo_det">(.+)</'''),
-            'regular_price': re.compile(r'''<meta\sitemprop="price"\scontent="(.+)">'''),
-            'discount_price': re.compile(r'''preco_desconto_avista-cm">R\$\s(\d*\.?\d*\.?\d*\,\d*)<'''),
-        }
-
         # Open the link
         try:
             response = requests.get(link)
-            if(response.status_code != 200):
-                raise Exception(f"Error {response.status_code} on link {link.split('/')[-1]}")
-            page = response.text
+            if(response.status_code == 200):
+                page = response.text
+            else:
+                # TODO: Make error 502 to try again later
+                raise Exception(f"Error {response.status_code} on link {link}")
         except Exception as e:
             print(f"Link Error: {e}")
 
@@ -31,31 +29,28 @@ class Kabum(api.Fetcher):
             return infos
 
         infos = dict()
-        # Title fetch
-        title_re = patterns['title'].search(page)
-        try:
-            infos['title'] = title_re.group(1)
-        except Exception as e:
-            raise Exception('No title found on the link: %s' % link)
 
-        # Price fetch
-        regular_price_re = patterns['regular_price'].search(page)
+        soup = BeautifulSoup(page, 'html.parser')
+
+        # Getting title
         try:
-            infos['price'] = regular_price_re.group(1)
+            infos['title'] = soup.find('h1', 'titulo_det').text.strip()
+        except:
+            infos['title'] = '-'
+            raise Exception("No title found on link: $s" % link)
+
+        # Getting price
+        try:
+            # Normal price
+            infos['price'] = float(soup.find('span', 'preco_desconto').strong.text.strip()[3:].replace(',', '.'))
             infos['discount'] = False
-        except Exception as e:
-            discount_price_re = patterns['discount_price'].search(page)
+        except:
             try:
-                infos['price'] = discount_price_re.group(1)
+                # Discount price
+                infos['price'] = float(soup.find('div', 'preco_desconto-cm').text[3:].replace(',', '.'))
                 infos['discount'] = True
-            except Exception as ej:
-                raise Exception('No price found on link: %s' % link)
-
-        # Convert price to a float
-        if infos['discount'] == False:
-            infos['price'] = float(infos['price'])
-        else:
-            infos['price'] = float(infos['price'].replace('.','').replace(',', '.'))
+            except:
+                raise Exception("No price found on link: %s" % link)
 
         # Everything went OK by this point
         self.fetched = True

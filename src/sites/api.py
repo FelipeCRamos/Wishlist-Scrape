@@ -1,28 +1,11 @@
 #!/usr/bin/env python3
 
 import re
-from urllib.request import *
 
 from sites.kabum import Kabum
 from sites.mercadolivre import ML
 from sites.terabyte import Terabyte
 from sites.amazon import Amazon
-
-class Fetcher:
-    '''
-    Fetcher base class
-    '''
-    def __init__(self):
-        self.fetched = False
-
-    def fetch(self, link):
-        pass
-
-    def get_title(self):
-        pass
-
-    def get_price(self):
-        pass
 
 def choose_api(link):
     '''

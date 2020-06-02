@@ -12,12 +12,12 @@ import sys              # Argv manipulating
 import os
 import re               # Regex things
 import threading        # Threads everywhere
+import argparse         # cool arg parser
 
 # Custom project libraries
 import args
 import product as pd
 import logs
-import parser
 
 data = dict()
 repeatData = dict()
@@ -119,22 +119,20 @@ def main(filepath, folderpath):
     logs.write2json(output_filepath, sorted_data)
 
 if __name__ == "__main__":
-    #  parsed_info = args.parseArgs(sys.argv)
+    parser = argparse.ArgumentParser(description = "Fetch prices of a given wishlist")
 
-    arguments = [
-        'l', # -l <links-file.txt>
-        'o', # -o <output_folder/.>
-    ]
+    parser.add_argument('-l', required=True, help="List of products (one per line)", metavar=('list.txt'))
+    parser.add_argument('-o', required=False, help="Output fetched prices", metavar=('output_file.txt'))
+    parser.add_argument('-T', '--no-threading',  required=False, help="Disable parallel fetches", action='store_true')
 
-    necessaryArguments = [ 'l' ]
+    args = parser.parse_args()
+
+    if args.no_threading:
+        print("[WARNING] No threads!")
+        THREAD_ENABLE = False
 
     try:
-        parsedArgs = parser.Parser(sys.argv, arguments, necessaryArguments).parseArgs()
-        #  print(os.getcwd()) # debug msg
-        if 'o' in parsedArgs:
-            main(parsedArgs['l'], parsedArgs['o'])
-        else:
-            main(parsedArgs['l'], ".")
+        main(args.l, args.o if args.o != None else ".")
 
     except Exception as inst:
         print('ERROR:', inst)

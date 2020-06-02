@@ -8,7 +8,7 @@ https://www.kabum.com.br/cgi-local/site/produtos/descricao_ofertas.cgi?codigo=92
 https://www.kabum.com.br/produto/99867/mem-ria-kingston-4gb-2666mhz-ddr4-cl19-kvr26n19s6-4
 
 # placa mae
-https://www.kabum.com.br/cgi-local/site/produtos/descricao_ofertas.cgi?codigo=94709
+https://www.kabum.com.br/produto/94709/placa-mae-gigabyte-ga-a320m-s2h-amd-am4-matx-ddr4
 
 # fonte
 https://www.kabum.com.br/produto/104631/fonte-seasonic-300w-80-plus-bronze-
