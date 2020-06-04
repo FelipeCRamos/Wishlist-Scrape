@@ -37,7 +37,7 @@ class Terabyte():
 
         # Getting price
         try:
-            infos['price'] = float(soup.find('p', 'valVista').text.strip()[3:].replace(',', '.'))
+            infos['price'] = float(soup.find('p', 'valVista').text.strip()[3:].replace('.', '').replace(',', '.'))
             infos['discount'] = False
         except:
             if soup.find('div', 'indisponivel') != None or soup.find('button', 'btn-exclusivo') != None:

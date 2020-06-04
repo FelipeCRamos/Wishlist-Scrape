@@ -42,12 +42,12 @@ class Kabum(Fetcher):
         # Getting price
         try:
             # Normal price
-            infos['price'] = float(soup.find('span', 'preco_desconto').strong.text.strip()[3:].replace(',', '.'))
+            infos['price'] = float(soup.find('span', 'preco_desconto').strong.text.strip()[3:].replace('.', '').replace(',', '.'))
             infos['discount'] = False
         except:
             try:
                 # Discount price
-                infos['price'] = float(soup.find('div', 'preco_desconto-cm').text[3:].replace(',', '.'))
+                infos['price'] = float(soup.find('div', 'preco_desconto-cm').text[3:].replace('.', '').replace(',', '.'))
                 infos['discount'] = True
             except:
                 raise Exception("No price found on link: %s" % link)
