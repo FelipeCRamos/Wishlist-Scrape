@@ -1,0 +1,3 @@
+cloudscraper
+argparse
+bs4
