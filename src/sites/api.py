@@ -7,6 +7,7 @@ from sites.mercadolivre import ML
 from sites.terabyte import Terabyte
 from sites.amazon import Amazon
 
+
 def choose_api(link):
     '''
     Function that will choose the correct API for a given link

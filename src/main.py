@@ -21,26 +21,29 @@ import logs
 
 data = dict()
 repeatData = dict()
+product_data = []
 sorted_data = dict()
 products = []
 
 THREAD_ENABLE = True
 VERBOSE_ENABLE = False
 CURRENT_VERSION = "0.2.4"
+TAX = 1.0
 
-def addFetchedData(title, price):
-    global data
+def addFetchedData(product):
+    #  global data
+    product_data.append(product)
 
-    if title is not None and price is not None:
-        if title in data:
-            data[title] += price
+    #  if product.title is not None and product.price is not None:
+        #  if product.title in data:
+            #  data[product.title] += product.price
 
-            if title in repeatData:
-                repeatData[title] += 1
-            else:
-                repeatData[title] = 2
-        else:
-            data[title] = price
+            #  if product.title in repeatData:
+                #  repeatData[product.title] += 1
+            #  else:
+                #  repeatData[product.title] = 2
+        #  else:
+            #  data[product.title] = product.price
 
 def fetchNext(product):
     global products
@@ -49,11 +52,11 @@ def fetchNext(product):
         curr_name = product.link.split('/')[-1]
 
         if VERBOSE_ENABLE:
-            print("Fetching... \t{}\n".format(curr_name[0:40]))
+            print("Fetching... \t{}".format(product.link))
 
         try:
             product.fetch()
-            addFetchedData(product.get_title(), product.get_price())
+            addFetchedData(product)
         except Exception as e:
             print(e)
     except:
@@ -92,6 +95,8 @@ def main(filepath, folderpath):
     global products
     products = [ pd.Product(link) for link in links ]
 
+    print("Fetching products...")
+
     for prod in products:
         if THREAD_ENABLE:
             CreateThread().start(prod)
@@ -101,6 +106,20 @@ def main(filepath, folderpath):
     # Wait until all threads are done
     while threading.active_count() != 1:
         continue
+    print("~")
+
+    product_data.sort(key = lambda x: x.price, reverse=True)
+
+    for product in product_data:
+        print(f"R$ {product.price:8.2f}\t{product.title[0:80-(16 + 6)]} [...]")
+
+    print("-" * 80)
+    sum_prices = sum([p.price for p in product_data])
+
+    print(f"R$ {sum_prices:8.2f}\tTOTAL (a vista)")
+    print(f"R$ {sum_prices * TAX:8.2f}\tTOTAL (parcelado +{(TAX-1)*100}%)")
+
+    exit()
 
     # Sort data by price
     global sorted_data
@@ -136,6 +155,7 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--output', required=False, help="Output fetched prices", metavar=('output_file.json'))
     parser.add_argument('-T', '--no-threading',  required=False, help="Disable parallel fetches", action='store_true')
     parser.add_argument('-v', '--verbose', required=False, help="Enable verbosity", action='store_true')
+    parser.add_argument('--tax', required=False, help='The % of tax that you want to simulate (like +13%)', metavar=13.0, type=int)
 
     args = parser.parse_args()
 
@@ -146,6 +166,9 @@ if __name__ == "__main__":
     if args.no_threading:
         print("[WARNING] No threads!")
         THREAD_ENABLE = False
+
+    if args.tax != None:
+        TAX += args.tax / 100
 
     try:
         main(args.list, args.output)

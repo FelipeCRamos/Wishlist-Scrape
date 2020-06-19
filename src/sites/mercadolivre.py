@@ -2,14 +2,16 @@ import re
 import requests
 from bs4 import BeautifulSoup as bSoup
 import cloudscraper
+from .fetcher import *
+#  from .api import ProductModel
 
-class ML():
+class ML(Fetcher):
     def fetch(self, link):
         '''
         Will return a Dictionary with:
         - title -> String
         - price -> Float
-        - discount -> Boolean
+        - isWithDiscount -> Boolean
         '''
 
         # Open the link
@@ -19,29 +21,31 @@ class ML():
             page = response.text
         except Exception:
             print("Link Error: %s" % link)
-            infos = {'title': link.split('/')[-1], 'price': 0.00, 'discount': False}
-            return infos
+            return ProductModel(
+                title = link.split('/')[-1],
+                price = 0.0,
+            )
 
-        infos = dict()
+        product = ProductModel()
         soup = bSoup(page, 'html.parser')
 
         # Title fetch
         try:
-            infos['title'] = soup.h1.string.replace('\n', '').replace('\t', '')
-        except Exception as e:
+            product.title = soup.h1.string.replace('\n', '').replace('\t', '')
+        except Exception as _:
             raise Exception('No title found on the link: %s' % link)
 
         # Price fetch
         try:
-            infos['price'] = soup.fieldset.span.span['content']
-            infos['discount'] = False
+            product.price = soup.fieldset.span.span['content']
+            product.hasDiscount = False
 
-        except Exception as e:
+        except Exception as _:
             raise Exception('No price found on link: %s' % link)
 
         # Convert price to a float
-        infos['price'] = float(infos['price'])
+        product.price = float(product.price)
 
         # Everything went OK by this point
         self.fetched = True
-        return infos
+        return product
