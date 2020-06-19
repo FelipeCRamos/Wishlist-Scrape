@@ -8,9 +8,9 @@ class Fetcher:
     def fetch(self, link):
         pass
 
-    def get_title(self):
+    def get_title(self, soup):
         pass
 
-    def get_price(self):
+    def get_price(self, soup):
         pass
 

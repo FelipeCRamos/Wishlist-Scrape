@@ -26,6 +26,7 @@ products = []
 
 THREAD_ENABLE = True
 VERBOSE_ENABLE = False
+CURRENT_VERSION = "0.2.4"
 
 def addFetchedData(title, price):
     global data
@@ -83,7 +84,7 @@ def main(filepath, folderpath):
     global products
     products = [ pd.Product(link) for link in links ]
 
-    for i in range(len(products)):
+    for _ in products:
         if THREAD_ENABLE:
             CreateThread().start()
         else:
@@ -119,13 +120,20 @@ def main(filepath, folderpath):
     logs.write2json(output_filepath, sorted_data)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description = "Fetch prices of a given wishlist")
+    parser = argparse.ArgumentParser(description="Fetch prices of a given wishlist")
 
-    parser.add_argument('-l', required=True, help="List of products (one per line)", metavar=('list.txt'))
-    parser.add_argument('-o', required=False, help="Output fetched prices", metavar=('output_file.txt'))
+    parser.add_argument('-l', '--list', required=True, help="List of products (one link per line)", metavar=('list.txt'))
+    parser.add_argument('-o', '--output', required=False, help="Output fetched prices", metavar=('output_file.json'), default='.')
+    parser.add_argument('-T', '--no-threading',  required=False, help="Disable parallel fetches", action='store_true')
+
+    args = parser.parse_args()
+
+    if args.no_threading:
+        print("[WARNING] No threads!")
+        THREAD_ENABLE = False
 
     try:
-        main(parser.parse_args().l, parser.parse_args().o if parser.parse_args().o != None else ".")
+        main(args.list, args.output)
 
     except Exception as inst:
         print('ERROR:', inst)
