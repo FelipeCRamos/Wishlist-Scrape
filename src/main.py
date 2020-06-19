@@ -28,19 +28,19 @@ THREAD_ENABLE = True
 VERBOSE_ENABLE = False
 CURRENT_VERSION = "0.2.4"
 
-def addFetchedData(title, price):
+def addFetchedData(title, price, special):
     global data
 
     if title is not None and price is not None:
         if title in data:
-            data[title] += price
+            data[title] += (price, special)
 
             if title in repeatData:
                 repeatData[title] += 1
             else:
                 repeatData[title] = 2
         else:
-            data[title] = price
+            data[title] = (price, special)
 
 def fetchNext(product):
     global products
@@ -52,7 +52,8 @@ def fetchNext(product):
             print("Fetching... \t{}\n".format(curr_name[0:40]))
 
         try:
-            addFetchedData(product.get_title(), product.get_price())
+            product.fetch()
+            addFetchedData(product.get_title(), product.get_price(), product.get_special())
         except Exception as e:
             print(e)
     except:
@@ -104,12 +105,13 @@ def main(filepath, folderpath):
     # Sort data by price
     global sorted_data
     total_sum = 0
-    for item, price in sorted(data.items(), key=lambda x: x[1], reverse=True):
+    for item, (price, special) in sorted(data.items(), key=lambda x: x[1][0], reverse=True):
         total_sum += price
 
         no_occur = repeatData[item] if item in repeatData else 1
 
-        itemName = "({}x) - {}".format(no_occur, item)
+        itemName = "({}x){} - {}".format(no_occur, '*' if special else "", item)
+
         sorted_data[itemName] = price
 
         print("R$ {:8.2f}\t({}x) {}".format(price, no_occur, item[0:70]))

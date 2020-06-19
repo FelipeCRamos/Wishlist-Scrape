@@ -2,6 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 import pdb
+import cloudscraper
 
 class Terabyte():
     def fetch(self, link):
@@ -14,14 +15,17 @@ class Terabyte():
 
         # Open the link
         try:
-            response = requests.get(link)
+            scraper = cloudscraper.create_scraper()
+            response = scraper.get(link)
             print(f"[STATUS] Getting link: {link}")
             page = response.text
-            if response.status_code != 200:
-                Exception("Ops... Something went wrong! Error: {}"\
-                          .format(response.status_code))
+            print(f"response code: {response.status_code}")
+            #  if response.status_code != 200:
+                #  raise Exception("Ops... Something went wrong! Error: {}"\
+                          #  .format(response.status_code))
         except Exception as e:
             print("Link Error: %s" % link)
+            print(f"Error: {e}")
             infos = {'title': link.split('/')[-1], 'price': 0.00, 'discount': False}
             return infos
 
@@ -33,6 +37,7 @@ class Terabyte():
         try:
             infos['title'] = soup.find('h1', 'tit-prod').text
         except:
+            infos['title'] = f"null ({link})"
             raise Exception("No title found on the link: %s" % link)
 
         # Getting price
@@ -42,7 +47,12 @@ class Terabyte():
         except:
             if soup.find('div', 'indisponivel') != None or soup.find('button', 'btn-exclusivo') != None:
                 # Unavailable product
-                infos['price'] = 0
+                try:
+                    infos['price'] = float(soup.find('p', 'p3').span.text.strip()[3:].replace('.','').replace(',', '.'))
+                    infos['special'] = True
+                except:
+                    infos['price'] = 0
+                    infos['special'] = False
             else:
                 raise Exception("No price found on link: %s" % link)
 

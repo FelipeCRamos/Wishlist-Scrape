@@ -27,16 +27,12 @@ class Product:
             self.fetched = True
 
         else:
-            if self.link == '':
-                raise Exception('Link is empty')
+            if self.link == '': raise Exception('Link is empty')
 
     def get_title(self):
         '''
         Will return the title of the product
         '''
-        if self.fetched == False:
-            self.fetch()
-
         try:
             return self.info['title']
         except Exception as e:
@@ -47,21 +43,22 @@ class Product:
         '''
         Will return the price of the product
         '''
-        if self.fetched == False:
-            self.fetch()
-
         try:
             return self.info['price']
         except Exception as e:
             raise Exception(f"No price available! Link: {self.product_name_by_link()}")
 
+    def get_special(self):
+        ''' Get if a product has a special flag on it '''
+        try:
+            return self.info['special']
+        except:
+            return False
+
     def get_discount(self):
         '''
         Get the boolean
         '''
-        if self.fetched == False:
-            self.fetch()
-
         try:
             return self.info['discount']
         except Exception as e:

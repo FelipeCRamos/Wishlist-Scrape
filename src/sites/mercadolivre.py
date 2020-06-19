@@ -1,6 +1,7 @@
 import re
 import requests
 from bs4 import BeautifulSoup as bSoup
+import cloudscraper
 
 class ML():
     def fetch(self, link):
@@ -13,9 +14,10 @@ class ML():
 
         # Open the link
         try:
-            response = requests.get(link)
+            scraper = cloudscraper.create_scraper()
+            response = scraper.get(link)
             page = response.text
-        except Exception as e:
+        except Exception:
             print("Link Error: %s" % link)
             infos = {'title': link.split('/')[-1], 'price': 0.00, 'discount': False}
             return infos
