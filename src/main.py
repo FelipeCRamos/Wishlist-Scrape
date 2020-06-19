@@ -42,27 +42,34 @@ def addFetchedData(title, price):
         else:
             data[title] = price
 
-def fetchNext():
+def fetchNext(product):
     global products
 
-    curr = products.pop(0)
-    curr_name = curr.link.split('/')[-1]
-
-    if VERBOSE_ENABLE:
-        print("Fetching... \t{}\n".format(curr_name[0:40]))
-
     try:
-        addFetchedData(curr.get_title(), curr.get_price())
-    except Exception as e:
-        print(e)
+        curr_name = product.link.split('/')[-1]
+
+        if VERBOSE_ENABLE:
+            print("Fetching... \t{}\n".format(curr_name[0:40]))
+
+        try:
+            addFetchedData(product.get_title(), product.get_price())
+        except Exception as e:
+            print(e)
+    except:
+        print("ERROR")
 
 class CreateThread(threading.Thread):
     '''
     Thread system, each thread will be responsible for one Product
     '''
+    def start(self, product):
+        self.product = product
+        super().start()
+
     def run(self):
         # Make the fetch on the next product
-        fetchNext()
+        fetchNext(self.product)
+
 
 def main(filepath, folderpath):
     # Tries to open the file for links extraction
@@ -84,11 +91,11 @@ def main(filepath, folderpath):
     global products
     products = [ pd.Product(link) for link in links ]
 
-    for _ in products:
+    for prod in products:
         if THREAD_ENABLE:
-            CreateThread().start()
+            CreateThread().start(prod)
         else:
-            fetchNext()
+            fetchNext(prod)
 
     # Wait until all threads are done
     while threading.active_count() != 1:
@@ -125,12 +132,18 @@ if __name__ == "__main__":
     parser.add_argument('-l', '--list', required=True, help="List of products (one link per line)", metavar=('list.txt'))
     parser.add_argument('-o', '--output', required=False, help="Output fetched prices", metavar=('output_file.json'), default='.')
     parser.add_argument('-T', '--no-threading',  required=False, help="Disable parallel fetches", action='store_true')
+    parser.add_argument('-v', '--verbose', required=False, help="Enable verbosity", action='store_true')
 
     args = parser.parse_args()
+
+    if args.verbose:
+        print("[WARNING] Verbose active!")
+        VERBOSE_ENABLE = True
 
     if args.no_threading:
         print("[WARNING] No threads!")
         THREAD_ENABLE = False
+
 
     try:
         main(args.list, args.output)
