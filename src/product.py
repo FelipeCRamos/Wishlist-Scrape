@@ -48,13 +48,6 @@ class Product:
         except Exception as e:
             raise Exception(f"No price available! Link: {self.product_name_by_link()}")
 
-    def get_special(self):
-        ''' Get if a product has a special flag on it '''
-        try:
-            return self.info['special']
-        except:
-            return False
-
     def get_discount(self):
         '''
         Get the boolean

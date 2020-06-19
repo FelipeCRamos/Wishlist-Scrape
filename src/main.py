@@ -28,19 +28,19 @@ THREAD_ENABLE = True
 VERBOSE_ENABLE = False
 CURRENT_VERSION = "0.2.4"
 
-def addFetchedData(title, price, special):
+def addFetchedData(title, price):
     global data
 
     if title is not None and price is not None:
         if title in data:
-            data[title] += (price, special)
+            data[title] += price
 
             if title in repeatData:
                 repeatData[title] += 1
             else:
                 repeatData[title] = 2
         else:
-            data[title] = (price, special)
+            data[title] = price
 
 def fetchNext(product):
     global products
@@ -53,7 +53,7 @@ def fetchNext(product):
 
         try:
             product.fetch()
-            addFetchedData(product.get_title(), product.get_price(), product.get_special())
+            addFetchedData(product.get_title(), product.get_price())
         except Exception as e:
             print(e)
     except:
@@ -105,12 +105,12 @@ def main(filepath, folderpath):
     # Sort data by price
     global sorted_data
     total_sum = 0
-    for item, (price, special) in sorted(data.items(), key=lambda x: x[1][0], reverse=True):
+    for item, price in sorted(data.items(), key=lambda x: x[1], reverse=True):
         total_sum += price
 
         no_occur = repeatData[item] if item in repeatData else 1
 
-        itemName = "({}x){} - {}".format(no_occur, '*' if special else "", item)
+        itemName = "({}x) - {}".format(no_occur, item)
 
         sorted_data[itemName] = price
 
@@ -123,16 +123,17 @@ def main(filepath, folderpath):
     print("R$ {:8.2f}\t{}".format(total_sum, 'TOTAL'))
     print('-' * 90)
 
-    output_filepath = folderpath + ("/" if folderpath[-1] != '/' else "") + \
-        filepath.split('.')[0].split("/")[-1]
-    print("Output filepath: {}".format(output_filepath))
-    logs.write2json(output_filepath, sorted_data)
+    if(folderpath != None):
+        output_filepath = folderpath + ("/" if folderpath[-1] != '/' else "") + \
+            filepath.split('.')[0].split("/")[-1]
+        print("Output filepath: {}".format(output_filepath))
+        logs.write2json(output_filepath, sorted_data)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fetch prices of a given wishlist")
 
     parser.add_argument('-l', '--list', required=True, help="List of products (one link per line)", metavar=('list.txt'))
-    parser.add_argument('-o', '--output', required=False, help="Output fetched prices", metavar=('output_file.json'), default='.')
+    parser.add_argument('-o', '--output', required=False, help="Output fetched prices", metavar=('output_file.json'))
     parser.add_argument('-T', '--no-threading',  required=False, help="Disable parallel fetches", action='store_true')
     parser.add_argument('-v', '--verbose', required=False, help="Enable verbosity", action='store_true')
 
@@ -145,7 +146,6 @@ if __name__ == "__main__":
     if args.no_threading:
         print("[WARNING] No threads!")
         THREAD_ENABLE = False
-
 
     try:
         main(args.list, args.output)

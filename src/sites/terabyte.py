@@ -17,15 +17,12 @@ class Terabyte():
         try:
             scraper = cloudscraper.create_scraper()
             response = scraper.get(link)
-            print(f"[STATUS] Getting link: {link}")
             page = response.text
-            print(f"response code: {response.status_code}")
-            #  if response.status_code != 200:
-                #  raise Exception("Ops... Something went wrong! Error: {}"\
-                          #  .format(response.status_code))
-        except Exception as e:
+            if response.status_code < 200 and response.status_code > 299:
+                raise Exception("Ops... Something went wrong! Error: {}"\
+                          .format(response.status_code))
+        except Exception:
             print("Link Error: %s" % link)
-            print(f"Error: {e}")
             infos = {'title': link.split('/')[-1], 'price': 0.00, 'discount': False}
             return infos
 
@@ -49,10 +46,8 @@ class Terabyte():
                 # Unavailable product
                 try:
                     infos['price'] = float(soup.find('p', 'p3').span.text.strip()[3:].replace('.','').replace(',', '.'))
-                    infos['special'] = True
                 except:
                     infos['price'] = 0
-                    infos['special'] = False
             else:
                 raise Exception("No price found on link: %s" % link)
 
