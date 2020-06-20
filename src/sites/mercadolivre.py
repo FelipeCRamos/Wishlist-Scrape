@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup as bSoup
 import cloudscraper
 from .fetcher import *
+import pdb
 #  from .api import ProductModel
 
 class ML(Fetcher):
@@ -24,6 +25,7 @@ class ML(Fetcher):
             return ProductModel(
                 title = link.split('/')[-1],
                 price = 0.0,
+                hasError = True,
             )
 
         product = ProductModel()
@@ -42,6 +44,12 @@ class ML(Fetcher):
 
         except Exception as _:
             raise Exception('No price found on link: %s' % link)
+
+        try:
+            if(soup.find('p', 'item-status-notification__title')):
+                product.isIndisponible = True
+        except:
+            product.isIndisponible = False
 
         # Convert price to a float
         product.price = float(product.price)

@@ -27,6 +27,7 @@ class Amazon(Fetcher):
             return ProductModel(
                 title = link.split('/')[-1],
                 price = 0.0,
+                hasErorr = True
             )
 
         product = ProductModel()
