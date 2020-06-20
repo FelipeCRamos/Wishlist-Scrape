@@ -15,6 +15,7 @@ class Product:
         self.price = 0.0
         self.hasDiscount = False
         self.isIndisponible = False
+        self.hasError = False
 
     def __repr__(self):
         return "{}".format(self.link.split('/')[-1])
@@ -28,6 +29,7 @@ class Product:
             info = self.api.fetch(self.api, self.link)
             self.title = info.title
             self.price = info.price
+            if(self.price == 0): self.hasError = True
             self.hasDiscount = info.hasDiscount
             self.isIndisponible = info.isIndisponible
             self.fetched = True
@@ -50,6 +52,9 @@ class Product:
 
     def get_indisponible(self):
         return self.isIndisponible
+
+    def get_error(self):
+        return self.hasError
 
     def product_name_by_link(self):
         return self.link.split('/')[-1]

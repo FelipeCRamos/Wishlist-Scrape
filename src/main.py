@@ -31,7 +31,9 @@ CURRENT_VERSION = "0.2.4"
 TAX = 1.0
 
 def get_status(product):
-    if product.get_indisponible():
+    if product.get_error():
+        return "E"
+    elif product.get_indisponible():
         return "I"
     elif product.get_discount():
         return "D"

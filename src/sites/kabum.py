@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 #  from .api import ProductModel
 from .fetcher import *
+import pdb
 
 class Kabum(Fetcher):
     def fetch(self, link):
@@ -48,7 +49,8 @@ class Kabum(Fetcher):
         except:
             try:
                 # Discount price
-                product.price = float(soup.find('div', 'preco_desconto-cm').text[3:].replace('.', '').replace(',', '.'))
+                product.price = float(soup.find('span', 'preco_desconto_avista-cm').text[3:].replace('.', '').replace(',', '.'))
+                #  pdb.set_trace()
                 product.hasDiscount = True
             except:
                 raise Exception("No price found on link: %s" % link)
