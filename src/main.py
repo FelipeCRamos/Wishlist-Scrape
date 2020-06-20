@@ -30,20 +30,13 @@ VERBOSE_ENABLE = False
 CURRENT_VERSION = "0.2.4"
 TAX = 1.0
 
-def addFetchedData(product):
-    #  global data
-    product_data.append(product)
-
-    #  if product.title is not None and product.price is not None:
-        #  if product.title in data:
-            #  data[product.title] += product.price
-
-            #  if product.title in repeatData:
-                #  repeatData[product.title] += 1
-            #  else:
-                #  repeatData[product.title] = 2
-        #  else:
-            #  data[product.title] = product.price
+def get_status(product):
+    if product.get_indisponible():
+        return "I"
+    elif product.get_discount():
+        return "D"
+    else:
+        return " "
 
 def fetchNext(product):
     global products
@@ -56,7 +49,7 @@ def fetchNext(product):
 
         try:
             product.fetch()
-            addFetchedData(product)
+            product_data.append(product)
         except Exception as e:
             print(e)
     except:
@@ -106,12 +99,13 @@ def main(filepath, folderpath):
     # Wait until all threads are done
     while threading.active_count() != 1:
         continue
+
     print("~")
 
     product_data.sort(key = lambda x: x.price, reverse=True)
 
     for product in product_data:
-        print(f"R$ {product.price:8.2f}\t{product.title[0:80-(16 + 6)]} [...]")
+        print(f"[{get_status(product)}] R$ {product.price:8.2f}\t{product.title[0:80-(16 + 6)]} [...]")
 
     print("-" * 80)
     sum_prices = sum([p.price for p in product_data])
