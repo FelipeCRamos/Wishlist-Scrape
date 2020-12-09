@@ -97,5 +97,5 @@ Developed by Felipe Ramos under the **MIT License**
 
 ###### Stats
 ```
-version     0.2.4
+version     0.2.40
 ```
