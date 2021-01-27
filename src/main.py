@@ -107,15 +107,13 @@ def main(filepath, folderpath):
     product_data.sort(key = lambda x: x.price, reverse=True)
 
     for product in product_data:
-        print(f"[{get_status(product)}] R$ {product.price:8.2f}\t{product.title[0:80-(16 + 6)]} [...]")
+        print(f"[{get_status(product)}] R$ {product.price:8.2f}\t{product.title[0:60-(16 + 6)]} [...]")
 
-    print("-" * 80)
+    print("-" * 60)
     sum_prices = sum([p.price for p in product_data])
 
     print(f"R$ {sum_prices:8.2f}\tTOTAL (a vista)")
     print(f"R$ {sum_prices * TAX:8.2f}\tTOTAL (parcelado +{(TAX-1)*100}%)")
-
-    exit()
 
     # Sort data by price
     global sorted_data
@@ -134,13 +132,15 @@ def main(filepath, folderpath):
     total_sum = round(total_sum, 2)
     sorted_data['TOTAL'] = total_sum
 
-    print('-'*86)
-    print("R$ {:8.2f}\t{}".format(total_sum, 'TOTAL'))
-    print('-' * 90)
+    #  print('-'*86)
+    #  print("R$ {:8.2f}\t{}".format(total_sum, 'TOTAL'))
+    #  print('-' * 90)
 
     if(folderpath != None):
-        output_filepath = folderpath + ("/" if folderpath[-1] != '/' else "") + \
-            filepath.split('.')[0].split("/")[-1]
+        #  print(folderpath)
+        #  output_filepath = folderpath + ("/" if folderpath[-1] != '/' else "") + \
+            #  filepath.split('.')[0].split("/")[-1]
+        output_filepath = folderpath
         print("Output filepath: {}".format(output_filepath))
         logs.write2json(output_filepath, sorted_data)
 
