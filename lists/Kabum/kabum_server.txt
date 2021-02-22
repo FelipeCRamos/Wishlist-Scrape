@@ -1,14 +1,20 @@
-# gabinete
-# https://www.kabum.com.br/produto/68745/gabinete-sharkoon-mini-itx-qb-one-
-
 # processador
 https://www.kabum.com.br/produto/102248/processador-amd-ryzen-3-3200g-cache-4mb-3-6ghz-4ghz-max-turbo-am4-yd3200c5fhbox
 
-# memoria
-https://www.kabum.com.br/cgi-local/site/produtos/descricao_ofertas.cgi?codigo=99867
-
 # placa mae
-https://www.kabum.com.br/produto/94709/placa-mae-gigabyte-ga-a320m-s2h-amd-am4-matx-ddr4
+https://www.kabum.com.br/cgi-local/site/produtos/descricao_ofertas.cgi?codigo=98076
+
+# memória
+https://www.kabum.com.br/cgi-local/site/produtos/descricao_ofertas.cgi?codigo=133504
 
 # fonte
-https://www.kabum.com.br/produto/74800/fonte-aerocool-350w-vx-350-en57181
+https://www.kabum.com.br/produto/59467/fonte-evga-400w-100-n1-0400-l
+
+# hd 4tb
+https://www.kabum.com.br/produto/95803/hd-seagate-barracuda-4tb-3-5-sata-st4000dm004
+
+# ssd
+https://www.kabum.com.br/produto/98543/ssd-crucial-bx-500-120gb-sata-leitura-540mb-s-grava-o-500mb-s-ct120bx500ssd1
+
+# gabinete
+https://www.kabum.com.br/cgi-local/site/produtos/descricao_ofertas.cgi?codigo=96489
