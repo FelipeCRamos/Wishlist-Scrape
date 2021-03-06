@@ -2,10 +2,10 @@
 https://www.kabum.com.br/produto/102248/processador-amd-ryzen-3-3200g-cache-4mb-3-6ghz-4ghz-max-turbo-am4-yd3200c5fhbox
 
 # placa mae
-https://www.kabum.com.br/cgi-local/site/produtos/descricao_ofertas.cgi?codigo=98076
+https://www.kabum.com.br/produto/98076/placa-m-e-gigabyte-b450m-ds3h-amd-matx-ddr4
 
 # memória
-https://www.kabum.com.br/cgi-local/site/produtos/descricao_ofertas.cgi?codigo=133504
+https://www.kabum.com.br/produto/133504/memoria-crucial-ballistix-8gb-ddr4-3000-mhz-cl15-preto-bl8g30c15u4b
 
 # fonte
 https://www.kabum.com.br/produto/59467/fonte-evga-400w-100-n1-0400-l
@@ -17,4 +17,4 @@ https://www.kabum.com.br/produto/95803/hd-seagate-barracuda-4tb-3-5-sata-st4000d
 https://www.kabum.com.br/produto/98543/ssd-crucial-bx-500-120gb-sata-leitura-540mb-s-grava-o-500mb-s-ct120bx500ssd1
 
 # gabinete
-https://www.kabum.com.br/cgi-local/site/produtos/descricao_ofertas.cgi?codigo=96489
+https://www.kabum.com.br/produto/96489/gabinete-cooler-master-masterbox-q300l-mini-tower-lateral-em-acr-lico-mcb-q300l-kann-s00
