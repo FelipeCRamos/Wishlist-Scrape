@@ -16,7 +16,8 @@ class Kabum(Fetcher):
 
         # Open the link
         try:
-            response = requests.get(link)
+            headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+            response = requests.get(link, headers=headers)
             if(response.status_code == 200):
                 page = response.text
             else:
@@ -35,9 +36,14 @@ class Kabum(Fetcher):
         product = ProductModel()
         soup = BeautifulSoup(page, 'html.parser')
 
+        #  print(soup.find('h1'))
+        #  print(soup.find(id='blocoValores').find('h4'))
+
+        #  raise Exception("Stop")
+
         # Getting title
         try:
-            product.title = soup.find('h1', 'titulo_det').text.strip()
+            product.title = soup.find('h1').text.strip()
         except:
             product.title = '-'
             raise Exception("No title found on link: $s" % link)
@@ -45,16 +51,10 @@ class Kabum(Fetcher):
         # Getting price
         try:
             # Normal price
-            product.price = float(soup.find('span', 'preco_desconto').strong.text.strip()[3:].replace('.', '').replace(',', '.'))
-            product.hasDiscount = False
+            product.price = float(soup.find(id='blocoValores').find('h4').text[3:].replace('.', '').replace(',', '.'))
+            product.hasDiscount = soup.find(id='cardAlertaOferta') != None
         except:
-            try:
-                # Discount price
-                product.price = float(soup.find('span', 'preco_desconto_avista-cm').text[3:].replace('.', '').replace(',', '.'))
-                #  pdb.set_trace()
-                product.hasDiscount = True
-            except:
-                raise Exception("No price found on link: %s" % link)
+            raise Exception("No price found on link: %s" % link)
 
         # Everything went OK by this point
         self.fetched = True
