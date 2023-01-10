@@ -1,12 +1,14 @@
 # processador
-https://www.kabum.com.br/produto/164458/processador-amd-ryzen-3-3200g-cache-4mb-3-6ghz-4ghz-max-turbo-am4-yd320gc5fibox
+https://www.kabum.com.br/produto/181065/processador-intel-core-i3-10105-3-7ghz-4-4ghz-max-turbo-cache-6mb-quad-core-8-threads-lga-1200-video-integrado-bx8070110105
+# cooler
+https://www.kabum.com.br/produto/96514/cooler-para-processador-cooler-master-intel-i70-strong-airflow-low-noise-rr-i70-20fk-r1
 # placa
-https://www.kabum.com.br/produto/94709/placa-mae-gigabyte-ga-a320m-s2h-amd-am4-matx-ddr4
+https://www.kabum.com.br/produto/151573/placa-mae-asus-prime-h510m-a-intel-socket-lga1200-microatx-ddr4
 # memoria ram
-https://www.kabum.com.br/produto/135291/memoria-ram-crucial-ballistix-8gb-ddr4-2666-mhz-cl16-udimm-preto-bl8g26c16u4b
+https://www.kabum.com.br/produto/172365/memoria-kingston-fury-beast-8gb-3200mhz-ddr4-cl16-preto-kf432c16bb-8
 # fonte
 https://www.kabum.com.br/produto/59467/fonte-evga-400w-100-n1-0400-l
 # ssd
-https://www.kabum.com.br/produto/85198/ssd-kingston-a400-480gb-sata-leitura-500mb-s-gravacao-450mb-s-sa400s37-480g
+https://www.kabum.com.br/produto/147641/ssd-240-gb-wd-green-pc-sn350-pcie-nvme-leitura-2400mb-s-e-gravacao-900mb-s-wds240g2g0c
 # gabinete
-https://www.kabum.com.br/produto/96489/gabinete-cooler-master-masterbox-q300l-mini-tower-lateral-em-acrilico-mcb-q300l-kann-s00
+# https://www.kabum.com.br/produto/96489/gabinete-cooler-master-masterbox-q300l-mini-tower-lateral-em-acrilico-mcb-q300l-kann-s00
